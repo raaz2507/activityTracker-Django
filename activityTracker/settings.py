@@ -118,7 +118,9 @@ import os
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS =  [os.path.join(BASE_DIR, 'static')] #development mode
+STATICFILES_DIRS =  [
+    os.path.join(BASE_DIR, 'main/static'),
+    ] #development mode
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') #for collectstatic
 # Default primary key field type
