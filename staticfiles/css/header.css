@@ -1,0 +1,93 @@
+/* General Reset */
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+} */
+
+/* Header Style */
+header {
+  width:90%;
+  margin: 0px auto 1rem auto;
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  color: white;
+  padding: 1rem 2rem;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+ 
+}
+
+/* Title */
+header .title_area h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+/* Navigation */
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+nav ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Logout Button */
+.button_area button {
+  padding: 8px 16px;
+  font-size: 1rem;
+  background-color: white;
+  color: #4e54c8;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header .button_area button:hover {
+  background-color: #4e54c8;
+  color: white;
+}
+/* flex seetting setart */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+nav ul{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+/* flex setting end */
+@media only screen and (max-width: 768px){
+  header {
+    justify-content: center;
+    row-gap: 2rem;
+  }
+}
