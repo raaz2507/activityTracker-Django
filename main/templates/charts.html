@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%}Sing up{% endblock title %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/charts.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+    <main>
+        <!-- <div class="container">
+            <div class="chartArea">
+                <canvas id="myChart1" height="500" width="500"></canvas>
+            </div>
+            <div class="buttonArea" id="chart1choice">
+                {% include "chartsChoiceTemplat.html" %}
+                
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="chartArea">
+                <canvas id="myChart2" height="500" width="500"></canvas>
+            </div>
+            <div class="buttonArea" id="chart2choice">
+                {% include "chartsChoiceTemplat.html" %}
+                
+            </div>
+        </div> -->
+    </main>
+{% endblock content %}
+{% block javascript %}
+<script src="{% static 'js/chart.umd.js' %}"></script>
+<script>
+    const allChartData = JSON.parse('{{ chart_data|escapejs }}');
+    
+</script>
+<script src="{% static 'js/charts_template.js' %}"></script>
+{% endblock javascript %}
+

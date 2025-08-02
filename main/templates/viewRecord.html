@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheet%}
+    <link rel="stylesheet" href="{% static 'css/viewRecord.css'%}">
+{% endblock stylesheet%}
+
+{% block title%}View Record{% endblock title %}
+
+{% block content %}
+<main>
+    <table>
+        <thead>
+            <th> Date</th>
+            <th> Start Time</th>
+            <th> End Time</th>
+            <th> Source</th>
+            <th> Triger</th>
+            <th> Times</th>
+            <th> Acction </th>
+        </thead>
+        <tbody>
+            {% for row in data %}
+                <tr>
+                    <td>{{row.date}}</td>
+                    <td>{{row.start_time}}</td>
+                    <td>{{row.end_time}}</td>
+                    <td>
+                        <!-- {{row.source}} -->
+                        {% for item in row.source %}
+                        <input type="checkbox" checked disabled> {{item}}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <!-- {{row.trigger_reason}} -->
+                        {% for item in row.trigger_reason %}
+                        <input type="checkbox" checked disabled> {{item}}
+                        {% endfor %}
+                    </td>
+                    <td>{{row.timesCount}}</td>
+                    <td>
+                        <a href="{% url 'record_edit' id=row.id %}">
+                            <button class="edit_btn">Edit</button>
+                        </a>
+
+                        <form action="{% url 'record_delete' id=row.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="del_btn">Delete</button>
+                        </form>
+                        
+                    </td>
+                </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+
+
+
+
+
+<a href="{% url 'addRecord' %}">
+    <button>Add Record</button>
+</a>
+</main>
+{% endblock content%}
