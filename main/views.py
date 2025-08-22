@@ -350,9 +350,24 @@ def yearly_calendar(request, year=None):
         'months_json': months_json_data
     })
 
+from django.http import JsonResponse
+def userAccountManage(request, user_id=None, del_user_id=None):
+    print(user_id, del_user_id)
+    if del_user_id:
+        user = get_object_or_404(Users, usr_id = del_user_id)
+        # user.delete()
+        userAccData = list(Users.objects.all().values('usr_id','user_name', 'pwd' ))
+        return JsonResponse({'userAccData':userAccData, 'messages':{'tag':"sussess", 'msg':f"{del_user_id} data Sussefuy Deleted..."}}, safe=False)
+    if user_id:
+        userData = list(Record.objects.filter(usr_id__usr_id=user_id).values( 'usr_id','date', 'start_time', 'end_time', 'source', 'trigger_reason', 'timesCount'))
+        return JsonResponse(userData, safe=False);
+    else:
+        userAccounts = Users.objects.all()
+        return render(request, 'userAccountManage.html', {'userAcounts': userAccounts})
 
-
-
+def userAccountManageDeleteUsr(request, user_id):
+    user = get_object_or_404(Users, usr_id=user_id);
+    user.delete();
 
 # import json
 # def yearly_calendar(request, year=None):

@@ -91,3 +91,22 @@ nav ul{
     row-gap: 2rem;
   }
 }
+.loing_profile{
+  text-align: center;
+  padding: 3px 6px;
+  /* border: 1px solid rgba(245, 222, 179, 0.4); */
+  /* border-radius: 15%; */
+  /* box-shadow: 0px 0px 14px -6px rgba(0, 0, 0, 0.2); */
+}
+.loing_profile img{
+  width: 2rem;
+  height: auto;
+ 
+}
+.loing_profile #username{
+  border-radius: 5px;
+  background-color: #4e54c899;
+  font-size: .8rem;
+  text-transform: capitalize;
+  padding: 3px 1px;
+}

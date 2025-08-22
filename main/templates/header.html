@@ -1,3 +1,4 @@
+{% load static %}
 <header>
     <div class="title_area">
         <h1>Activity Tracker</h1>
@@ -5,6 +6,12 @@
     <nav>
         {% include 'navLink.html' %}
     </nav>
+    {% if is_login%}
+        <div class="loing_profile">
+            <img src="{% static 'img/circle-user-solid-full.svg' %}" alt="icon">
+            <div id="username">{{usr_name}}</div>
+        </div>
+    {% endif %}
     <div class="button_area">
         <a href="{% url 'logout' %}"><button>Logout</button></a>
     </div>

@@ -22,7 +22,8 @@ class sinupDashbord{
         this.#elemts["pwdInput"] = this.#elemts["form"]["pwd"];
         this.#elemts["cpwdInput"] = this.#elemts["form"]["cpwd"];
         this.#elemts["submit_btn"] = this.#elemts["form"].querySelector('[type="submit"]');
-        this.#elemts[ "passwordMsg" ] = document.getElementById(passwordMsg);
+        this.#elemts[ "pwdMsg" ] = document.getElementById("pwdMsg");
+        this.#elemts[ "cpwdMsg" ] = document.getElementById("cpwdMsg");
     }
     #setEvents(){
         const {pwdEyeIcon, cpwdEyeIcon, pwdInput, cpwdInput , submit_btn}=this.#elemts;
@@ -30,6 +31,14 @@ class sinupDashbord{
         pwdEyeIcon.addEventListener('click', ()=> this.#toggleIcon(pwdEyeIcon, pwdInput));
         cpwdEyeIcon.addEventListener('click', ()=> this.#toggleIcon(cpwdEyeIcon, cpwdInput));
 
+        pwdInput.addEventListener('input', (event)=>{
+            const {pwdMsg} =this.#elemts;
+            pwd = event.target.value;
+            const valid = pwd.length>=4 && pwd.length<=6 ;
+            pwdMsg.innerHTML =  valid ? "password proside..": "password allow only 4 to 6 length";
+            pwdMsg.style.color = valid ? "green": "red";
+            console.log(pwd, valid)
+        });
         //password check releted revents
         cpwdInput.addEventListener("input", ()=>this.#checkPassword());
 
@@ -52,13 +61,12 @@ class sinupDashbord{
 
     }
     #checkPassword(){
-        const { pwdInput, cpwdInput, submit_btn } = this.#elemts;
-        const msg = document.getElementById("passwordMsg");
+        const { pwdInput, cpwdInput, submit_btn , cpwdMsg} = this.#elemts;
 
         const match = pwdInput.value === cpwdInput.value;
         submit_btn.disabled = !match;
-        msg.textContent = match ? "Password Matched ✅" : "Passwords don't match ❌";
-        msg.style.color = match ? "green" : "red";
+        cpwdMsg.textContent = match ? "Password Matched ✅" : "Passwords don't match ❌";
+        cpwdMsg.style.color = match ? "green" : "red";
     }
 
     // #checkPassword(){

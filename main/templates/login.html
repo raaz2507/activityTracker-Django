@@ -8,8 +8,10 @@
 {% block content %}
 <main>
     {% if messages %}
-        {% for message in messages %}
-            <p style="color: red;">{{ message }}</p>
+        {% for msg in messages %}
+            <p class="msg {% if msg.tags %} {{msg.tags}}  {% endif %}">
+                {{ msg }}
+            </p>
         {% endfor %}
     {% endif %}
     <!-- <h1 class="">Welcome</h1> -->
@@ -24,7 +26,7 @@
 
             <label for="pwd">Password</label>
             <div class="pwdinputContainer">
-                <input type="password" name="pwd" id="pwd" placeholder="Enter password">
+                <input type="password" name="pwd" id="pwd" placeholder="Enter password" min="4" max="6">
                 <img src="{% static 'img/eyeClose.svg' %}" alt="icon" id="eyeIcon" class="eyeIcon">
             </div>
 

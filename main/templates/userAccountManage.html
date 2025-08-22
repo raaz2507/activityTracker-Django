@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%}Accoutn Manager{% endblock title %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/userAccountManage.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+<main>
+    <div class="leftDiv">
+        <div id="messageBlock"></div>
+        <table id="userAccountTable">
+            <caption>User Accountes</caption>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>User name</th>
+                    <th>Password</th>
+                    <th>status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in userAcounts %}
+                <tr data-id="{{ data.usr_id }}">
+                    <td >{{ data.usr_id }}</td>
+                    <td>{{ data.user_name }}</td>
+                    <td>{{ data.pwd }}</td>
+                    <td><input type="checkbox" name="active" id="active" value="True"></td>
+                    <td> 
+                        <button class="deleteBtn">
+                            <img src="{% static 'img/trash-can.svg' %}"  alt="Delete" title="delete record" style="width:.9rem;">
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="rightDiv">
+        <table id="userDataTable">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Source</th>
+                    <th>Trigeer Reason</th>
+                    <th>Time Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+</main>
+
+    
+{% endblock content %}
+{% block javascript %}
+
+<script src="{% static 'js/userAccountManage.js' %}"></script>
+{% endblock javascript %}
+

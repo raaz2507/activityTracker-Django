@@ -24,16 +24,18 @@
             <input type="text" name="usr_name" id="usr_name" placeholder="Enter User Name" required>
 
             <label for="pwd">Password</label>
+            <small id="pwdMsg"></small>
+
             <div class="pwdinputContainer">
-                <input type="password" placeholder="Enter password" id="pwd" name="pwd" required>
+                <input type="password" minlength="4" maxlength="6" placeholder="Enter password" id="pwd" name="pwd" required>
                 <!-- <span class="eyeIcon"></span> -->
                 <img class="eyeIcon" id="pwdEyeIcon" src="{% static 'img/eyeClose.svg' %}" alt="Icon">
             </div>
 
             <label for="cpwd">Conform Password</label>
-            <small id="passwordMsg"></small>
+            <small id="cpwdMsg"></small>
             <div class="pwdinputContainer">
-                <input type="password" placeholder="Enter password" id="cpwd" name="cpwd" required>
+                <input type="password" minlength="4" maxlength="6" placeholder="Enter password" id="cpwd" name="cpwd" required>
                 <!-- <span class="eyeIcon"></span> -->
                 <img class="eyeIcon" id="cpwdEyeIcon" src="{% static 'img/eyeClose.svg' %}" alt="Icon">
             </div>

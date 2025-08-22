@@ -23,5 +23,13 @@ function closeEye(){
     eye_icon.src= closeEyeFile;
 }
 
+setTimeout(()=>{
+    document.querySelectorAll('.msg').forEach((msg)=>{
+        msg.style.transition = "opacity 0.5s ease";
+        msg.style.opacity= "0";
 
+        // smooth fadeout के बाद DOM से remove
+        setTimeout(()=> msg.remove(), 500 );
+    });
+}, 3000);
 

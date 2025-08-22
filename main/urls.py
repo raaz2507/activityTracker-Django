@@ -23,4 +23,9 @@ urlpatterns = [
     #charts view
     path('charts/', views.chart_view, name="charts"),
 
+    #mange Accounts
+    path('usr_acc_man/',  views.userAccountManage, name='userAccountManage'),
+    path('usr_acc_man/<slug:user_id>/',  views.userAccountManage, name='getUserData'),
+    path('usr_acc_man/delete/<slug:del_user_id>/',  views.userAccountManage, name='delUserData'),
+
 ]
