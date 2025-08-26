@@ -1,0 +1,44 @@
+main{
+    width: 90%;
+    margin: 0 auto;
+    /* border: 1px solid red; */
+    padding: 1rem;
+}
+ main .about_section{
+    width:70%;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: justify;
+    /* background-color: rgba(128, 128, 128, 0.4); */
+}
+/*
+.about_section ol {
+    padding-left: 2rem;
+}
+.about_section h2{
+    color:bisque;
+} */
+main .about_section {
+    /* max-width: 700px; */
+    /* margin: 50px auto; */
+    text-align: justify;
+    padding: 25px 20px;
+    background: rgba(247, 249, 252, 0.8);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+main .about_section h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+main .about_section p {
+    font-size: 1.05rem;
+    color: #555;
+    /* line-height: 1.5; */
+}

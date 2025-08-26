@@ -4,9 +4,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import usersForm, LoginForm, recordForm
 from .models import Users, Record
 
-
+from django.http import HttpResponse
 def home(request):
-    return redirect('login')
+    user = request.session.get('user')
+    return render(request, 'home.html', { 'userName':user['user_name']})
+
 
 
 
@@ -76,16 +78,16 @@ def login(request):
     if request.method == "POST":
         usrName = request.POST.get("userName")
         psswd = request.POST.get("pwd")
-
        
         user =  Users.objects.filter(user_name = usrName, pwd = psswd).first()
         if user:
-            request.session['usr_id'] = user.usr_id
+            request.session['user'] = {'user_name': user.user_name, 'id': user.usr_id}
             return redirect('addRecord')  # apne home URL ka naam daalo yahan
         else:
+            request.session['user'] = {'user_name': '', 'id': ''}
             messages.error(request, "Username not exists or password does not match")
             success= False
-    return render(request, "login.html",{ 'userName':usrName, 'password':psswd , 'success': success}) 
+    return render(request, "login.html",{ 'userName':usrName, 'success': success}) 
 # def login(request):
 #     form = LoginForm()
 #     success = True
@@ -99,7 +101,7 @@ def login(request):
 #             print(f"{usrName} {psswd}")
 #             user =  Users.objects.filter(user_name = usrName, pwd = psswd).first()
 #             if user:
-#                 request.session['usr_id'] = user.usr_id
+#                 request.session['user'] = user.usr_id
 #                 # request.session["userName"] = usrName
 #                 # request.session["pwd"] = pwd
                 
@@ -110,18 +112,18 @@ def login(request):
 #     return render(request, 'login.html', {'form':form, 'success': success})
 
 def logout( request ):
-    request.session['usr_id']=''
+    request.session['user']={'user_name': '', 'id': ''}
     return redirect('home')
 
 def viewRecordPage(request):
-    usr_id = request.session.get('usr_id')
-    if not usr_id:
+    usr = request.session.get('user')
+    if not usr:
         return redirect('login')
-    user = Users.objects.filter(usr_id= usr_id).first()
+    user = Users.objects.filter(usr_id= usr['id']).first()
     print(user)
     data= Record.objects.filter(usr_id= user)
     print(data)
-    return render(request, 'viewRecord.html', {'data': data})
+    return render(request, 'viewRecord.html', {'data': data, 'userName': usr['user_name']})
 
 
 # def addRecordPage(request):
@@ -145,9 +147,10 @@ def viewRecordPage(request):
 
 #create and update dono ke liye
 def RecordFormPage(request, id=None):
-    if not request.session.get('usr_id'):
+    usr = request.session.get('user')
+    if not usr:
         return redirect('login')
-
+    
 
     if id:
         row= get_object_or_404(Record, pk=id)
@@ -158,14 +161,14 @@ def RecordFormPage(request, id=None):
 
     if form.is_valid():
         instance = form.save(commit=False)
-        usr_id = request.session.get('usr_id')
-        if usr_id:
-            usr= Users.objects.get(usr_id =  usr_id)
-            instance.usr_id = usr
+        
+        if usr:
+            user= Users.objects.get(usr_id =  usr['id'])
+            instance.usr_id = user
             instance.save()
             # form.save_m2m()  # अब source (ManyToMany) save करो
         return redirect('viewRecord')
-    return render(request, 'addRecord.html', {'form':form})
+    return render(request, 'addRecord.html', {'form':form, 'userName': usr['user_name']})
 
 def record_delete(request, id=None):
     row= get_object_or_404(Record, pk=id)
@@ -173,16 +176,20 @@ def record_delete(request, id=None):
         row.delete();
         return redirect('viewRecord')
 
+def selectActivity(request):
+    render(request, 'selectActivity.html', )
+
+
 #chart views
 import json
 from django.db.models import Count
 
 def chart_view(request):
-    usr_id = request.session.get('usr_id')
-    if not usr_id:
+    usr = request.session.get('user')
+    if not usr:
         return redirect('login')
 
-    user = Users.objects.filter(usr_id= usr_id).first()
+    user = Users.objects.filter(usr_id= usr['id']).first()
     records = Record.objects.filter(usr_id=user)
 
     data = {"chart1": sourceAnalize(records),
@@ -195,7 +202,7 @@ def chart_view(request):
     #     "data": [12, 19, 3, 5, 2, 3],
     # },   
     }
-    return render(request, 'charts.html', {'chart_data': json.dumps(data)})
+    return render(request, 'charts.html', {'chart_data': json.dumps(data), 'userName': usr['user_name']})
 
 ''' chart releted function start '''
 
@@ -297,14 +304,14 @@ from .models import Record  # अपने model को import करें
 from bs4 import BeautifulSoup  # पहले ensure करें कि यह install है: pip install beautifulsoup4
 
 def yearly_calendar(request, year=None):
-    if not request.session.get('usr_id'):
+    if not request.session.get('user'):
         return redirect('login')
 
     if year is None:
         year = datetime.now().year
 
-    usr_id = request.session.get('usr_id')
-    user_records = Record.objects.filter(usr_id__usr_id=usr_id)
+    usr = request.session.get('user')
+    user_records = Record.objects.filter(usr_id__usr_id=usr['id'])
     record_dates = [rec.date for rec in user_records if rec.date.year == year]
 
     cal = calendar.HTMLCalendar(calendar.SUNDAY)
@@ -347,7 +354,8 @@ def yearly_calendar(request, year=None):
     return render(request, 'calander.html', {
         'year': year,
         'months': months,
-        'months_json': months_json_data
+        'months_json': months_json_data, 
+        'userName': usr['user_name'],
     })
 
 from django.http import JsonResponse
@@ -431,3 +439,15 @@ def userAccountManageDeleteUsr(request, user_id):
 #         months.append({'name': month_name, 'html': html_month})
 
 #     return render(request, 'calander.html', {'year': year, 'months': months})
+
+
+def selectActivity_view(request):
+    usr = request.session.get('user')
+    if not usr:
+        return redirect('login')
+    
+    return render(request, 'selectActivity.html', {'userName': usr['user_name']})
+
+def about_page_view(request):
+    user = request.session.get('user')
+    return render(request, 'about.html', { 'userName':user['user_name']})

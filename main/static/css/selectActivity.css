@@ -1,0 +1,140 @@
+:root{
+    --color1: #ea580c;
+    --color2: #d97706;
+    --color3: #65a30d;
+    --color4: #059669;
+    --color5: #0891b2;
+    --color6: #ca8a04;
+    --color7: #db2777;
+    --color8: #2563eb;
+    --color9: #9f57e0;
+}
+
+main{
+    width:90vw;
+    margin:0 auto;
+    padding: 10px 20px;
+    background-color: rgba(245, 245, 245, 0.7);
+}
+/* main *{ border:1px solid red;} */
+.sectionRow{
+    width:100%;
+    height: auto;
+    box-shadow:inset 0 0 13px -3px black;
+    border-radius: 10px;
+    padding: 1rem;
+    padding-left: 3rem;
+    margin-bottom: 1rem;
+    
+    overflow-x: scroll;
+    position: relative;
+}
+/* flex setting start */
+.sectionRow{
+    display: flex;
+    gap:10px;
+}
+.activity_card{
+    flex: 0 0 20rem;
+    /* flex-basis: 20rem; */
+}
+/* flex setting end */
+.sectionRow::after{
+    position: absolute;
+    left:0;
+    bottom:50%;
+    transform: translateY( 50%) rotateZ(180deg);
+    writing-mode: vertical-rl;
+    white-space: nowrap;
+    text-orientation:sideways;
+    line-height: 3rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.774);
+
+}
+#favrateSection{
+    background-color: wheat; 
+}
+#favrateSection::after{
+   content: "🌟Favorite";
+}
+
+#allActivity{
+    background-color: skyblue;
+}
+#allActivity::after{
+    content: "💳All Cards";
+}
+.activity_card{
+    border-radius: 10px;
+    padding:1rem;
+    color: white;
+    box-shadow: 2px 2px 13px -2px rgba(0, 0, 0, 0.541);
+    user-select: none;
+    backdrop-filter: blur(1px);
+}
+.activity_card ul {
+    list-style: none;
+    padding: 0 1rem;
+    margin: 10px 0;
+}
+.activity_card ul li{
+    list-style: none;
+    display: inline-block;
+    margin: 3px 5px;
+}
+.activity_card[data-activity-id="1"]{
+    background-color: var(--color1);
+}
+.activity_card[data-activity-id="2"]{
+    background-color: var(--color2);
+}
+.activity_card[data-activity-id="3"]{
+    background-color: var(--color3);
+}
+.activity_card[data-activity-id="4"]{
+    background-color: var(--color4);
+}
+.activity_card[data-activity-id="5"]{
+    background-color: var(--color5);
+}
+.activity_card[data-activity-id="6"]{
+    background-color: var(--color6);
+}
+.activity_card[data-activity-id="7"]{
+    background-color: var(--color7);
+}
+.activity_card[data-activity-id="8"]{
+    background-color: var(--color8);
+}
+.activity_card[data-activity-id="9"]{
+    background-color: var(--color9);
+}
+.activity_card[data-activity-id="9"] h1{
+    color: #98E057;
+}
+.activity_card[data-activity-id="9"] ul.triger h3{
+    color: #5798E0;
+}
+.activity_card[data-activity-id="9"] ul.source h3{
+    color: #E09F57;
+}
+
+#createActivityBtn{
+    font-size: 1.5rem;
+    padding: 5px 10px;
+    color:rgba(0, 128, 0, 0.6);
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 13px -3px rgba(0, 0, 0, 0.5);
+}
+#createActivityBtn:active{
+    color:white;
+    background-color: rgba(0, 128, 0, 0.6);
+    box-shadow: 0 0 8px -3px rgba(0, 0, 0, 0.548);
+}
+
+
+

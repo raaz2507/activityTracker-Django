@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%}Select Activity{% endblock title %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/selectActivity.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+
+<main>
+    
+    <section id="favrateSection" class="sectionRow">
+        <!-- <div class="activity_card" data-activity-id="9">
+            <h1>Example</h1> 
+            <ul class="triger">
+                <h3 >Triger/Cose</h3>
+                <li>cose1</li>
+                <li>cose1</li>
+                <li>cose1</li>
+                <li>cose1</li>
+            </ul>
+            
+            <ul class="source">
+                <h3>Source/Action</h3>
+                <li>cose1</li>
+                <li>cose1</li>
+                <li>cose1</li>
+                <li>cose1</li>
+            </ul>
+        </div> -->
+    </section>
+    <section id="allActivity" class="sectionRow">
+        <!-- <div class="activity_card" data-activity-id="1">
+            <h1>Example</h1> 
+            <ul class="triger">
+                <h3 >Triger/Cose</h3>
+                <li>cose1</li>
+                <li>cose1</li>
+                <li>cose1</li>
+                <li>cose1</li>
+            </ul>
+            
+            <ul class="source">
+                <h3>Source/Action</h3>
+                <li>cose1</li>
+                <li>cose1</li>
+                <li>cose1</li>
+                <li>cose1</li>
+            </ul>
+        </div> -->
+    </section>
+    <button type="button" id="createActivityBtn">Creaet Activity</button>
+</main>
+    
+{% endblock content %}
+{% block javascript %}
+
+<script src="{% static 'js/selectActivity.js' %}"></script>
+{% endblock javascript %}
+
+
+
+
+
+

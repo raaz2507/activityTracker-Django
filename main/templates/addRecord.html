@@ -25,7 +25,5 @@
 
 {% endblock content%}
 {% block javascript %}
-<script >
-    console.log(`${document.forms['addRecordForm'].innerHTML}`)
-</script>
+<script src="{% static 'js/addRecord.js' %}"></script>
 {% endblock javascript %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%}Sing up{% endblock title %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+<main>
+    <section class="about_section">
+        <h2>Activity Tracker App</h2>
+        <p>
+            This app is a <i><b>personal productivity / learning logger</b></i>, 
+            where users can track their daily activities and gain insights about their time usage.
+        </p>
+        <ol>
+            <li>
+                <h4>Models Structure</h4>
+                <ul>
+                    <li>Users can track study time, sports, movie watching, gaming, book reading, and many other activities.</li>
+                    <li>Users get to know when and which activity they did, and for how long.</li>
+                    <li>Activity records will store: activity source, reason/trigger, start time, end time, and date.</li>
+                </ul>
+            </li>
+            <li>
+                <h4>Main Features</h4>
+                <ul>
+                    <li><b>Add Activity –</b> Log new activities easily.</li>
+                    <li><b>View Activities –</b> Check activities in calendar or list view.</li>
+                    <li><b>Graphs & Charts –</b> Visualize progress with pie charts and bar charts.</li>
+                    <li><b>Analytics –</b> Analyze how much time was spent on each activity and which source had the highest engagement.</li>
+                    <li><b>Custom Choice Fields –</b> Predefined activity sources and triggers using <code>TextChoices</code>.</li>
+                </ul>
+            </li>
+            <li>
+                <h4>Future Enhancements</h4>
+                <ul>
+                    <li>Export activity data as CSV/Excel.</li>
+                    <li>Add reminders or notifications for planned activities.</li>
+                    <li>Multi-user profiles for personalized tracking.</li>
+                </ul>
+            </li>
+        </ol>
+    </section>
+
+</main>
+
+    
+{% endblock content %}
+{% block javascript %}
+
+<script src="{% static 'js/' %}"></script>
+{% endblock javascript %}
+

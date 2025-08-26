@@ -3,16 +3,26 @@
     <div class="title_area">
         <h1>Activity Tracker</h1>
     </div>
-    <nav>
-        {% include 'navLink.html' %}
-    </nav>
-    {% if is_login%}
+    <div class="button_area">
+    {% if userName %}
         <div class="loing_profile">
             <img src="{% static 'img/circle-user-solid-full.svg' %}" alt="icon">
-            <div id="username">{{usr_name}}</div>
+            <div id="username">{{ userName }}</div>
         </div>
+        <a href="{% url 'logout' %}"><button type="button">Logout</button></a>
+    {% else%}
+        <a href="{%url 'login' %}"><button type="button">Login</button></a>
+        <a href="{%url 'signup' %}"><button type="button">Signup</button></a>
     {% endif %}
-    <div class="button_area">
-        <a href="{% url 'logout' %}"><button>Logout</button></a>
+    
+        
+   
+    <div id="theameBtn"></div>
+    <a href="{% url 'about' %}"><button type="button">&#9432; About</button></a>
     </div>
 </header>
+ {% if userName %}
+<nav>
+    {% include 'navLink.html' %}
+</nav>
+{% endif %}
