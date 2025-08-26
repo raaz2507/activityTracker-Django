@@ -6,10 +6,11 @@ from .models import Users, Record
 
 from django.http import HttpResponse
 
-if request.session.get('user') == None: 
-    request.session['user']={'user_name': '', 'id': ''}
+
 
 def home(request):
+    if request.session.get('user') == None: 
+        request.session['user']={'user_name': '', 'id': ''}
     user = request.session.get('user')
     return render(request, 'home.html', { 'userName':user['user_name']})
 
