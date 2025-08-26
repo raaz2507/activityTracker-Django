@@ -5,6 +5,10 @@ from .forms import usersForm, LoginForm, recordForm
 from .models import Users, Record
 
 from django.http import HttpResponse
+
+if request.session.get('user') == None: 
+    request.session['user']={'user_name': '', 'id': ''}
+
 def home(request):
     user = request.session.get('user')
     return render(request, 'home.html', { 'userName':user['user_name']})
@@ -44,33 +48,6 @@ def singup(request):
 
     return render(request, "singup.html", {'success': success})
 
-# def singup(request):
-#     form = usersForm()
-#     print('form1')
-#     success = False
-#     if request.method == "POST":
-#         print('form2')
-#         form =  usersForm(request.POST)
-#         if form.is_valid():
-#             print('form3')
-#             usr_name =  request.POST.get("usr_name")
-#             pwd = request.POST.get("pwd")
-#             cpwd = request.POST.get("cpwd")
-#             print(f'{usr_name} - {pwd} - {cpwd}')
-#             if pwd != cpwd:
-#                 form.add_error(None, "Passwords do not match")
-#                 return render(request, "singup.html", {'form': form, 'success': False})
-#             Users(user_name= usr_name , pwd = pwd).save()
-            
-#             # form.save()
-#             success=True
-            
-#             return redirect('login')
-#         else:
-#             form = usersForm()
-#     return render(request, "singup.html",{'form':form, 'success': success})
-
-# from django.contrib import messages
 
 def login(request):
     success = True
@@ -88,32 +65,31 @@ def login(request):
             messages.error(request, "Username not exists or password does not match")
             success= False
     return render(request, "login.html",{ 'userName':usrName, 'success': success}) 
-# def login(request):
-#     form = LoginForm()
-#     success = True
 
-#     if request.method == "POST":
-        
-#         form = LoginForm(request.POST)
-#         if form.is_valid():
-#             usrName = form.cleaned_data.get('user_name')
-#             psswd = form.cleaned_data.get('pwd')
-#             print(f"{usrName} {psswd}")
-#             user =  Users.objects.filter(user_name = usrName, pwd = psswd).first()
-#             if user:
-#                 request.session['user'] = user.usr_id
-#                 # request.session["userName"] = usrName
-#                 # request.session["pwd"] = pwd
-                
-#                 return redirect('addRecord')
-#             else:
-#                 success= False
-#                 form = LoginForm()
-#     return render(request, 'login.html', {'form':form, 'success': success})
 
 def logout( request ):
     request.session['user']={'user_name': '', 'id': ''}
     return redirect('home')
+
+from django.http import JsonResponse
+def userAccountManage(request, user_id=None, del_user_id=None):
+    print(user_id, del_user_id)
+    if del_user_id:
+        user = get_object_or_404(Users, usr_id = del_user_id)
+        # user.delete()
+        userAccData = list(Users.objects.all().values('usr_id','user_name', 'pwd' ))
+        return JsonResponse({'userAccData':userAccData, 'messages':{'tag':"sussess", 'msg':f"{del_user_id} data Sussefuy Deleted..."}}, safe=False)
+    if user_id:
+        userData = list(Record.objects.filter(usr_id__usr_id=user_id).values( 'usr_id','date', 'start_time', 'end_time', 'source', 'trigger_reason', 'timesCount'))
+        return JsonResponse(userData, safe=False);
+    else:
+        userAccounts = Users.objects.all()
+        return render(request, 'userAccountManage.html', {'userAcounts': userAccounts})
+
+def userAccountManageDeleteUsr(request, user_id):
+    user = get_object_or_404(Users, usr_id=user_id);
+    user.delete();
+
 
 def viewRecordPage(request):
     usr = request.session.get('user')
@@ -124,25 +100,6 @@ def viewRecordPage(request):
     data= Record.objects.filter(usr_id= user)
     print(data)
     return render(request, 'viewRecord.html', {'data': data, 'userName': usr['user_name']})
-
-
-# def addRecordPage(request):
-#     if request.method == "POST":
-#         form = recordForm(request.POST)
-#         if form.is_valid():
-            
-#             instance = form.save(commit=False)
-#             usr_id = request.session.get('usr_id')
-#             if usr_id:
-#                 usr= Users.objects.get(usr_id =  usr_id)
-#                 instance.usr_id = usr
-#                 instance.save()
-#                 # form.save_m2m()  # अब source (ManyToMany) save करो
-#             return redirect('viewRecord')
-#     else:
-#         form = recordForm()
-    
-#     return render(request, 'addRecord.html', {'form': form})
 
 
 #create and update dono ke liye
@@ -358,24 +315,7 @@ def yearly_calendar(request, year=None):
         'userName': usr['user_name'],
     })
 
-from django.http import JsonResponse
-def userAccountManage(request, user_id=None, del_user_id=None):
-    print(user_id, del_user_id)
-    if del_user_id:
-        user = get_object_or_404(Users, usr_id = del_user_id)
-        # user.delete()
-        userAccData = list(Users.objects.all().values('usr_id','user_name', 'pwd' ))
-        return JsonResponse({'userAccData':userAccData, 'messages':{'tag':"sussess", 'msg':f"{del_user_id} data Sussefuy Deleted..."}}, safe=False)
-    if user_id:
-        userData = list(Record.objects.filter(usr_id__usr_id=user_id).values( 'usr_id','date', 'start_time', 'end_time', 'source', 'trigger_reason', 'timesCount'))
-        return JsonResponse(userData, safe=False);
-    else:
-        userAccounts = Users.objects.all()
-        return render(request, 'userAccountManage.html', {'userAcounts': userAccounts})
 
-def userAccountManageDeleteUsr(request, user_id):
-    user = get_object_or_404(Users, usr_id=user_id);
-    user.delete();
 
 # import json
 # def yearly_calendar(request, year=None):
