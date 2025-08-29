@@ -14,39 +14,20 @@
             </p>
         {% endfor %}
     {% endif %}
+
     <!-- <h1 class="">Welcome</h1> -->
     <form action="" method="post" name="loginForm">
         {% csrf_token %}
         
         <fieldset>
             <legend>Login</legend>
-            
-            <label for="userName"> User Name</label>
-            <input type="text" name="userName" id="userName" value="{{ userName | default:'' }}" placeholder="Enter Username.">
-
-            <label for="pwd">Password</label>
-            <div class="pwdinputContainer">
-                <input type="password" name="pwd" id="pwd" placeholder="Enter password" min="4" max="6">
-                <img src="{% static 'img/eyeClose.svg' %}" alt="icon" id="eyeIcon" class="eyeIcon">
-            </div>
-
+            {{ form.as_p }}
+           
             <button type="submit">Submit</button>
         </fieldset>
     </form>
     <p>If u have not Account then <a href="{% url 'signup' %}">Singup</a>.</p>
 </main>
-
-<img src="{% static 'img/eyeOpne.svg' %}" id="openEyeFile" alt="openEyeFile" hidden>
-<img src="{% static 'img/eyeClose.svg' %}" id="closeEyeFile" alt="closeEyeFile" hidden>
-
-
-{% if not success %}
-<!-- <p id="success">Invalid username or password...</p> -->
-<script>
-    alert("You have Entred Rong ID or Password");
-    // window.location.href = "{% url 'addRecord' %}"
-</script>
-{% endif %}
 
 {% endblock content%}
 

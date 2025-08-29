@@ -9,41 +9,50 @@
 
 {% block content %}
 <main>
+    {% for msg in messages %}
+    <div class="{% if msg.tags %}{{msg.tags}}{% endif %}" >{{msg}}</div>
+    {% endfor %}
     <table>
         <thead>
+            <th> Activity Name</th>
             <th> Date</th>
             <th> Start Time</th>
             <th> End Time</th>
             <th> Source</th>
-            <th> Triger</th>
+            <th> Triger /cose </th>
             <th> Times</th>
-            <th> Acction </th>
+            <th> Actions </th>
         </thead>
         <tbody>
             {% for row in data %}
                 <tr>
-                    <td>{{row.date}}</td>
-                    <td>{{row.start_time}}</td>
-                    <td>{{row.end_time}}</td>
+                    <td>{{ row.activity_name }}</td>
+                    <td>{{ row.date }}</td>
+                    <td>{{ row.start_time }}</td>
+                    <td>{{ row.end_time }}</td>
                     <td>
                         <!-- {{row.source}} -->
-                        {% for item in row.source %}
-                        <input type="checkbox" checked disabled> {{item}}
+                        {% for key, value in row.source.items %}
+                        {% if value %}
+                        <input type="checkbox" checked disabled> {{key}}
+                        {% endif %}
                         {% endfor %}
                     </td>
                     <td>
                         <!-- {{row.trigger_reason}} -->
-                        {% for item in row.trigger_reason %}
-                        <input type="checkbox" checked disabled> {{item}}
+                        {% for key, value in row.trigger.items %}
+                        {% if value %}
+                        <input type="checkbox" checked disabled> {{key}}
+                        {% endif %}
                         {% endfor %}
                     </td>
-                    <td>{{row.timesCount}}</td>
+                    <td>{% if row.extra %}{{row.extra}}{% endif %}</td>
                     <td>
-                        <a href="{% url 'record_edit' id=row.id %}">
+                        <a href="{% url 'record_edit' row.id %}">
                             <button class="edit_btn">Edit</button>
                         </a>
 
-                        <form action="{% url 'record_delete' id=row.id %}" method="post" style="display:inline;">
+                        <form action="{% url 'record_delete' row.id %}" method="post" style="display:inline;">
                             {% csrf_token %}
                             <button type="submit" class="del_btn">Delete</button>
                         </form>
@@ -53,13 +62,9 @@
             {% endfor%}
         </tbody>
     </table>
-
-
-
-
-
-<a href="{% url 'addRecord' %}">
-    <button>Add Record</button>
-</a>
 </main>
 {% endblock content%}
+{% block javascript %}
+
+<script src="{% static 'js/blank.js' %}"></script>
+{% endblock javascript %}

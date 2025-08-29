@@ -4,12 +4,16 @@
         <h1>Activity Tracker</h1>
     </div>
     <div class="button_area">
-    {% if userName %}
-        <div class="loing_profile">
-            <img src="{% static 'img/circle-user-solid-full.svg' %}" alt="icon">
-            <div id="username">{{ userName }}</div>
-        </div>
+    {% if user.username %}
+        <a href="{% url 'change_user_profile' user.id %}">
+            <div class="loing_profile">
+                <img src="{% static 'img/circle-user-solid-full.svg' %}" alt="icon">
+                <div id="username">{{ user.username }}</div>
+            </div>
+        </a>
         <a href="{% url 'logout' %}"><button type="button">Logout</button></a>
+        
+
     {% else%}
         <a href="{%url 'login' %}"><button type="button">Login</button></a>
         <a href="{%url 'signup' %}"><button type="button">Signup</button></a>
@@ -21,7 +25,7 @@
     <a href="{% url 'about' %}"><button type="button">&#9432; About</button></a>
     </div>
 </header>
- {% if userName %}
+ {% if user.username %}
 <nav>
     {% include 'navLink.html' %}
 </nav>

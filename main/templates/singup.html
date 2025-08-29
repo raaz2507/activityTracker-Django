@@ -10,8 +10,8 @@
 
 <main>
     {% if messages %}
-        {% for message in messages %}
-            <p style="color: red;">{{ message }}</p>
+        {% for msg in messages %}
+            <p class="{% if msg.tags %} {{mag.tags}}{% endif %}">{{ message }}</p>
         {% endfor %}
     {% endif %}
     <!-- <h1>Singup</h1> -->
@@ -19,46 +19,18 @@
         {% csrf_token %}
         <fieldset>
             <legend>Singup</legend>
-            
-            <label for="usr_name">User Name</label>
-            <input type="text" name="usr_name" id="usr_name" placeholder="Enter User Name" required>
-
-            <label for="pwd">Password</label>
-            <small id="pwdMsg"></small>
-
-            <div class="pwdinputContainer">
-                <input type="password" minlength="4" maxlength="6" placeholder="Enter password" id="pwd" name="pwd" required>
-                <!-- <span class="eyeIcon"></span> -->
-                <img class="eyeIcon" id="pwdEyeIcon" src="{% static 'img/eyeClose.svg' %}" alt="Icon">
-            </div>
-
-            <label for="cpwd">Conform Password</label>
-            <small id="cpwdMsg"></small>
-            <div class="pwdinputContainer">
-                <input type="password" minlength="4" maxlength="6" placeholder="Enter password" id="cpwd" name="cpwd" required>
-                <!-- <span class="eyeIcon"></span> -->
-                <img class="eyeIcon" id="cpwdEyeIcon" src="{% static 'img/eyeClose.svg' %}" alt="Icon">
-            </div>
-            <!-- {{form.as_p}} -->
-            <button type="submit" disabled>Submit</button>
+            {{form.as_p}}
+            <button type="submit" >Create Account</button>
         </fieldset>
     </form>
     <p>If u have already Account then <a href="/login">Login</a></p>
 
 </main>
-<img src="{% static 'img/eyeOpne.svg' %}" id="openEyeFile" alt="openEyeFile" hidden>
-<img src="{% static 'img/eyeClose.svg' %}" id="closeEyeFile" alt="closeEyeFile" hidden>
 
-
-    
 {% endblock content %}
 {% block javascript %}
-{% if success %}
-<script>
-   alert("Account sussesfuly Created");
-//    window.location.href= "{% url 'login' %}";
-</script>
-{% endif %}
+<script src="{% static 'js/login.js' %}"></script>
 <script src="{% static 'js/singup.js' %}"></script>
+
 {% endblock javascript %}
 

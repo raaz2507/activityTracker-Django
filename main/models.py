@@ -1,53 +1,60 @@
 from django.db import models
-from multiselectfield import MultiSelectField
+
 # Create your models here.
-# from django.contrib.auth import get_user_model
-# users= get_user_model()
-class Users(models.Model):
-    def save(self, *args, **kwargs):
-        if not self.usr_id:
-            last_user = Users.objects.order_by('-id',).first()
-            if last_user and last_user.usr_id:
-                lastNumber = int(last_user.usr_id.split('_')[1])
-                self.usr_id =  f"usr_{lastNumber + 1:02d}"
-            else:
-                self.usr_id =  "usr_01"
-        super().save(*args, **kwargs)
+from django.contrib.auth.models import AbstractUser
 
+from django.core.validators import MinValueValidator, MaxValueValidator
 
-    usr_id =  models.CharField(max_length=10, unique = True, null=False, editable= False)
-    user_name = models.CharField( max_length=10 , unique=True, null=False)
-    pwd = models.CharField( max_length=4 , null=False)
+class myuser(AbstractUser):
+    phone= models.CharField(max_length=10, unique=True)
+    gender= models.CharField(max_length=10, choices=[('male', 'Male'),('female', 'Female'), ('other', 'Other')], default='male')
+    age = models.IntegerField(validators=(MinValueValidator(0),MaxValueValidator(100)), default=1, null=False)
+    def __str__(self):
+        return f"id:{self.id } usr_name:"+super().__str__()
+
+from colorfield.fields import ColorField
+class activity_schema(models.Model):
+    activity_name = models.CharField(max_length=50, unique=True, null=False, blank=False)
+    slug = models.CharField(max_length=50, unique=True, null=False, blank= False)
+    color_field = ColorField(default='#FFFFFF')
+    source = models.JSONField(null=False, blank=False)
+    trigger = models.JSONField(null=False, blank=False)
+    extra = models.JSONField(null=False, blank=False, default=dict)
 
     def __str__(self):
-        return f"ID: {self.usr_id}, U: {self.user_name}, P: {self.pwd}"
-
-
-
-class Record(models.Model):
-    class SourceChoice(models.TextChoices):
-        videos = 'videos', 'videos'
-        books = 'books', 'books'
-        comics =  'comics', 'comics'
-        interction = 'interction', 'interction'
-        chat = 'chat', 'chat'
-
-    class TriggerReasonFilde(models.TextChoices):
-        digitalVisual = 'Digital visual', 'Digital visual'
-        social_interaction = 'social interaction', 'social interaction'
-        hadNotDoFromLastLong = 'hadNotDoFromLastLong', 'hadNotDoFromLastLong'
-
-
-
-    usr_id =  models.ForeignKey(Users, on_delete=models.CASCADE)
-    date = models.DateField( null=False)
-    start_time = models.TimeField( null=False)
-    end_time =  models.TimeField( blank=True, null=True)
-    # source = models.CharField(choices=SourceChoice.choices , max_length=65, default=SourceChoice.videos)
-    source = MultiSelectField(choices=SourceChoice.choices , max_length=65, default=SourceChoice.videos)
-    # trigger_reason =models.CharField(choices=TriggerReasonFilde.choices, max_length=65, default=TriggerReasonFilde.digitalVisual)
-    trigger_reason =MultiSelectField(choices=TriggerReasonFilde.choices, max_length=65, default=TriggerReasonFilde.digitalVisual)
-    timesCount = models.IntegerField(default=1)
+        return f"{self.id}-{self.activity_name}- {self.source} - {self.trigger} - {self.extra}"
+    
+class usersDefine_activity_schema(models.Model):
+    usr_id = models.ForeignKey(
+        myuser,
+        on_delete= models.CASCADE,
+        related_name= 'usersDefine_activity_schema'
+    )
+    activity_name = models.CharField(max_length=50, unique=True, null=False, blank=False)
+    slug = models.CharField(max_length=50, unique=True, null=False, blank= False)
+    source = models.JSONField(null=False, blank=False)
+    trigger = models.JSONField(null=False, blank=False)
+    extra = models.JSONField(null=False, blank=False, default=dict)
+    favtrate = models.BooleanField(null=False, blank=False, default=False)
 
     def __str__(self):
-        return f"{self.date}, {self.start_time}, {self.end_time}, {self.source}"
+        return f"{self.usr_id}- {self.activity_name}- {self.source}- {self.trigger}- {self.extra} - {self.favtrate}"
+
+
+class userRecords(models.Model):
+    usr_id = models.ForeignKey(
+        myuser,
+        on_delete= models.CASCADE, # अगर user delete होगा तो उसकी सारी records भी delete होंगी
+        related_name='activity_record'  # user.records से access कर सकते हैं
+    )
+    date = models.DateField()
+    start_time =  models.TimeField(null=False, blank=False , )
+    end_time =  models.TimeField(null=False, blank=False )
+    activity_name = models.CharField(max_length=50, null=False, blank=False)
+    source = models.JSONField(null=False, blank=False)
+    trigger = models.JSONField(null=False, blank=False)
+    extra = models.JSONField(null=False, blank=False, default=dict)
+
+    def __str__(self):
+        return f"{self.usr_id}{self.date}- {self.start_time}- {self.end_time} {self.activity_name}"
+

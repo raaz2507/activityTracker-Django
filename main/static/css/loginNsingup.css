@@ -24,7 +24,7 @@ main form legend {
     margin-bottom: 15px;
     font-weight: 600;
     color: #007bff;
-    text-align: center;
+    /* text-align: center; */
 }
 form label {
     display: block;
@@ -34,7 +34,9 @@ form label {
     color: #2f3640;
 }
 main form input[type="text"],
-main form input[type="password"] {
+main form input[type="password"],
+main form input[type="email"],
+main form input[type="number"] {
     width: 100%;
     padding: 12px 40px 12px 12px;
     border: 1px solid #ccc;
@@ -43,6 +45,7 @@ main form input[type="password"] {
     font-size: 1rem;
     box-sizing: border-box;
     transition: 0.3s;
+    text-align: center;
 }
 form input:focus {
     border-color: #3498db;
@@ -89,10 +92,17 @@ main form button[type="submit"]:disabled{
   opacity: 0.5;
     /* background-color: rgba(0, 123, 255, 0.473); */
 }
+main form fieldset > div.radio_btn{
+  display: flex;
+  gap:1rem;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
 
+}
 main p {
     margin-top: 20px;
-    text-align: center;
     color: #555;
     font-size: 0.95rem;
 }

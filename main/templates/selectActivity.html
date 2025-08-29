@@ -11,7 +11,7 @@
 
 <main>
     
-    <section id="favrateSection" class="sectionRow">
+    <section id="favrateActivitys" class="sectionRow">
         <!-- <div class="activity_card" data-activity-id="9">
             <h1>Example</h1> 
             <ul class="triger">
@@ -31,27 +31,32 @@
             </ul>
         </div> -->
     </section>
-    <section id="allActivity" class="sectionRow">
-        <!-- <div class="activity_card" data-activity-id="1">
-            <h1>Example</h1> 
-            <ul class="triger">
-                <h3 >Triger/Cose</h3>
-                <li>cose1</li>
-                <li>cose1</li>
-                <li>cose1</li>
-                <li>cose1</li>
-            </ul>
-            
-            <ul class="source">
-                <h3>Source/Action</h3>
-                <li>cose1</li>
-                <li>cose1</li>
-                <li>cose1</li>
-                <li>cose1</li>
-            </ul>
-        </div> -->
+    <section id="allActivitys" class="sectionRow">
+         {% for activitie in all_activities %}
+            <a   href="{% url 'addRecord' activitie.id %}" >
+                <div class="activity_card" style="backgroun-color: {{ activitie.color_field }};" data-activity-id="{{ forloop.counter }}">
+                    <h1>{{activitie.activity_name}}</h1> 
+                    <ul class="triger" >
+                        <h3 >Triger/Cose</h3>
+                        {% for cose in activitie.trigger %}
+                            <li>{{ cose }},</li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <ul class="source">
+                        <h3>Source/Action</h3>
+                        {% for cose in activitie.source %}
+                        <li>{{ cose }},</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </a>
+        {% endfor %}
     </section>
+
+  
     <button type="button" id="createActivityBtn">Creaet Activity</button>
+    <section id="userDefineActivitys" class="sectionRow"></section>
 </main>
     
 {% endblock content %}

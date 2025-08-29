@@ -25,10 +25,14 @@ userAccountTable_tbody.addEventListener('click',async (event)=>{
             resData.userAccData.forEach(data=>{
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                <td>${ data.usr_id }</td>
-                <td>${ data.user_name }</td>
-                <td>${ data.pwd }</td>
-                <td><input type="checkbox" name="active" id="active" value="True"></td>
+                <td>${ user.id }</td>
+                <td>${ user.username }</td>
+                <td>${ user.first_name }</td>
+                <td>${ user.last_name }</td>
+                <td>${ user.email }</td>
+                <td>${ user.gender }</td>
+                <td><input type="checkbox" name="active" id="active" value="${ user.is_active }"></td>
+                <td>${ user.age }</td>
                 <td> 
                     <button class="deleteBtn">
                         <img src="/static/img/trash-can.svg"  alt="Delete" title="delete record" style="width:.9rem;">
@@ -64,14 +68,15 @@ userAccountTable_tbody.addEventListener('click',async (event)=>{
             const tbodyFrag = document.createDocumentFragment();
             user_data.forEach( data =>{
                 const tr = document.createElement("tr");
-                caption.innerHTML = `id= ${data.usr_id}`;
+                caption.innerHTML = `id= ${data.id} ${data.usr_id__username}`;
                 tr.innerHTML = `
+                <td>${ data.activity_name }</td>
                 <td>${ data.date }</td>
                 <td>${ data.start_time }</td>
                 <td>${ data.end_time }</td>
-                <td>${ data.source }</td>
-                <td>${ data.trigger_reason }</td>
-                <td>${ data.timesCount }</td>
+                <td>${ JSON.stringify(data.source, null, 1) }</td>
+                <td>${ JSON.stringify(data.trigger, null, 1) }</td>
+                
                 `
                 tbodyFrag.appendChild(tr);
             });

@@ -8,15 +8,14 @@
 
 {% block content %}
 <main>
-    <form action="" method="post" name="addRecordForm">
+    <form action="" method="POST">
         {% csrf_token %}
         <fieldset>
-            <legend>Add New Record</legend>
-            {{ form.as_p }}
-            <button type="submit">Submit</button>
+            <legend> {{activity.activity_name}}</legend>
+            {{form.as_p}}
+            <button type="submit">Save</button>
             <button type="reset">Reset</button>
         </fieldset>
-    
     </form>
     <a href="{% url 'viewRecord' %}">
     <button > View Record</button>

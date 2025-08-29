@@ -1,7 +1,11 @@
-const favrateSection =  document.getElementById('favrateSection');
-const allActivity =  document.getElementById('allActivity');
-addExampleCard(favrateSection);
-addExampleCard(allActivity);
+const favrateActivitys =  document.getElementById('favrateActivitys');
+const allActivitys =  document.getElementById('allActivitys');
+const userDefineActivitys =  document.getElementById('userDefineActivitys');
+
+// addExampleCard(favrateActivitys);
+// addExampleCard(allActivitys);
+// addExampleCard(userDefineActivitys);
+
 function addExampleCard(element){
     let htmlText='';
     for (let i=1; i<=9; i++){
