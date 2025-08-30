@@ -1,4 +1,4 @@
-@import url('./colorProfile.css');
+/* @import url('./colorProfile.css'); */
 
 body, html{
     width: 100%;
@@ -39,14 +39,14 @@ body .blur_bg{
 main{
     position:relative;
     z-index: 1;
+    width:90vw;
+    margin:0 auto;
 }
 body header{
     align-self: flex-start;
 }
 body main{flex: 1;}
-body footer{
-    align-self:flex-end;
-}
+body footer{align-self:auto;}
 .msg{
     color: var(--bs-white);
     font-size: 1rem;

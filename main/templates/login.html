@@ -23,10 +23,11 @@
             <legend>Login</legend>
             {{ form.as_p }}
            
-            <button type="submit">Submit</button>
+            <button type="submit">Login</button>
         </fieldset>
+        <p>If u have not Account then <a href="{% url 'signup' %}">Singup</a>.</p>
     </form>
-    <p>If u have not Account then <a href="{% url 'signup' %}">Singup</a>.</p>
+    
 </main>
 
 {% endblock content%}

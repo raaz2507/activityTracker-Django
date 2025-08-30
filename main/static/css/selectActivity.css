@@ -11,10 +11,11 @@
 }
 
 main{
-    width:90vw;
-    margin:0 auto;
     padding: 10px 20px;
     background-color: rgba(245, 245, 245, 0.7);
+}
+main a{
+    text-decoration: none;
 }
 /* main *{ border:1px solid red;} */
 .sectionRow{
@@ -33,13 +34,11 @@ main{
 .sectionRow{
     display: flex;
     flex-wrap: wrap;
+    align-items: stretch;
     justify-content: space-evenly;
-    gap:10px;
+    gap: 20px 10px;
 }
-.activity_card{
-    flex: 0 0 20rem;
-    /* flex-basis: 20rem; */
-}
+/* .activity_card{    flex: 0 0 20rem;} */
 /* flex setting end */
 .sectionRow::after{
     position: absolute;
@@ -76,34 +75,50 @@ main{
     content: "custmized"
 }
 .activity_card{
+    width: 23rem;
     border-radius: 10px;
+    /* border:2px dashed rgba(245, 222, 179, 0.6); */
+    outline: none !important;
     padding:1rem;
     color: white;
     box-shadow: 2px 2px 13px -2px rgba(0, 0, 0, 0.541);
     user-select: none;
     backdrop-filter: blur(1px);
 }
+.activity_card .heading{
+    text-transform: capitalize;
+}
+.activity_card .title{
+    text-transform: capitalize;
+    margin: 1rem auto .3rem auto;
+}
 .activity_card ul {
     list-style: none;
     padding: 0 1rem;
     margin: 10px 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .activity_card ul li{
     list-style: none;
     display: inline-block;
     margin: 3px 5px;
+    font-family: 'Courier New', Courier, monospace;
 }
 .activity_card[data-activity-id="1"]{
     background-color: var(--color1);
+    outline: 5px solid var(--color1);
 }
 .activity_card[data-activity-id="2"]{
     background-color: var(--color2);
+     outline: 5px solid var(--color2);
 }
 .activity_card[data-activity-id="3"]{
     background-color: var(--color3);
+     outline: 5px solid var(--color3);
 }
 .activity_card[data-activity-id="4"]{
     background-color: var(--color4);
+     outline: 5px solid var(--color4);
 }
 .activity_card[data-activity-id="5"]{
     background-color: var(--color5);
@@ -130,8 +145,9 @@ main{
     color: #E09F57;
 }
 
-#createActivityBtn{
+/* #createActivityBtn{
     font-size: 1.5rem;
+    text-align: center;
     padding: 5px 10px;
     color:rgba(0, 128, 0, 0.6);
     background-color: white;
@@ -144,5 +160,67 @@ main{
     box-shadow: 0 0 8px -3px rgba(0, 0, 0, 0.548);
 }
 
+.add_sing{
+    border-radius: 50%;
+    width:5rem;
+    height: 5rem;
+    border: 3px solid brown;
+    font-size: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto;
+}
+ */
+#createActivityBtn {
+    flex: 0 0 15rem;               /* width control */
+    min-height: 10rem;             /* height set */
+    border: 2px dashed var(--bs-primary); /* dashed border for add effect */
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--bs-primary);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.03s ease;
+}
 
+/* Hover effect */
+#createActivityBtn:hover {
+    background: var(--bs-primary);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
 
+/* Heading styling */
+#createActivityBtn .heading {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+/* Plus icon styling */
+#createActivityBtn .add_sing {
+    font-size: 2.5rem;
+    font-weight: bold;
+    line-height: 1;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.02s ease;
+}
+
+/* Plus hover effect */
+#createActivityBtn:hover .add_sing {
+    background: white;
+    color: var(--bs-primary);
+}

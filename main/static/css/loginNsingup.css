@@ -1,11 +1,8 @@
 main {
-  width: 420px;
-  margin: 40px auto;
-  padding: 25px;
-  background: rgba(253, 253, 253, 0.7);
-  border-radius: 15px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.1);
-  font-family: 'Segoe UI', sans-serif;
+  
+  
+  
+ 
 }
 
 main h1 {
@@ -13,7 +10,15 @@ main h1 {
   color: #333;
   margin-bottom: 30px;
 }
-
+main form{
+  width: 420px;
+  padding: 2rem 2rem;
+  margin: 40px auto;
+  background: rgba(253, 253, 253, 0.7);
+  border-radius: 15px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
 main form fieldset {
   border: none;
   padding: 0;

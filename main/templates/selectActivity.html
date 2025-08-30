@@ -35,16 +35,16 @@
          {% for activitie in all_activities %}
             <a   href="{% url 'addRecord' activitie.id %}" >
                 <div class="activity_card" style="backgroun-color: {{ activitie.color_field }};" data-activity-id="{{ forloop.counter }}">
-                    <h1>{{activitie.activity_name}}</h1> 
+                    <h1 class="heading">{{activitie.activity_name}}</h1> 
                     <ul class="triger" >
-                        <h3 >Triger/Cose</h3>
+                        <h3 class="title">Triger/Cose</h3>
                         {% for cose in activitie.trigger %}
                             <li>{{ cose }},</li>
                         {% endfor %}
                     </ul>
                     
                     <ul class="source">
-                        <h3>Source/Action</h3>
+                        <h3 class="title">Source/Action</h3>
                         {% for cose in activitie.source %}
                         <li>{{ cose }},</li>
                         {% endfor %}
@@ -55,8 +55,14 @@
     </section>
 
   
-    <button type="button" id="createActivityBtn">Creaet Activity</button>
-    <section id="userDefineActivitys" class="sectionRow"></section>
+    
+    <section id="userDefineActivitys" class="sectionRow">
+        <div class="activity_card" id="createActivityBtn">
+            <h3 class="heading">Creaet Activity</h3> 
+            <div class="add_sing">+</div>
+        </div>
+        
+    </section>
 </main>
     
 {% endblock content %}

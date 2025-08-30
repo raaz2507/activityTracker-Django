@@ -4,11 +4,11 @@
         <h1>Activity Tracker</h1>
     </div>
     <div class="button_area">
-    {% if user.username %}
-        <a href="{% url 'change_user_profile' user.id %}">
+    {% if request.user.is_authenticated and request.user.id %}
+        <a href="{% url 'change_user_profile' request.user.id %}">
             <div class="loing_profile">
                 <img src="{% static 'img/circle-user-solid-full.svg' %}" alt="icon">
-                <div id="username">{{ user.username }}</div>
+                <div id="username">{{ request.user.username }}</div>
             </div>
         </a>
         <a href="{% url 'logout' %}"><button type="button">Logout</button></a>

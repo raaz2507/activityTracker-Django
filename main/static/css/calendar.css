@@ -1,0 +1,273 @@
+/* body *{border: 1px solid red;} */
+main{
+    background: url("../img/beautiful-sea-landscape-with-water-nature.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+/* calandr styling start */
+#calenderContainer{
+    width:95%;
+    min-height: max-content;
+    padding: 1rem;
+    margin:1rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-evenly;
+    gap: 10px 10px;
+}
+.add_sing{
+    border:5px dashed skyblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 4rem;
+}
+.calendar_header{
+    padding: 1rem;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: stretch;
+}
+.calendar_header button{
+    font-size: 2rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+.calendar_header .year_display{
+    text-align: center;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    width: 7rem;
+    font-weight: 900;
+    color: burlywood;
+}
+
+.calendar{
+    font-family: "poppins", sans-serif;
+    /* border: 1px solid black; */
+    width:20rem;
+    height: auto;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(2px);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    user-select: none;
+}
+.calendar .cal_header .monthYear{
+    font-size: 1.3rem;
+    margin: 0rem auto;
+    padding: 10px;
+    text-align: center;
+    font-weight: 600;
+    /* width:10rem; */
+}
+.calendar .cal_header button{
+    border: none;
+    border-radius: 50%;
+    background-color: #fff;    
+    width: 2rem;
+    height: 2rem;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+.calendar .days .day{
+    text-align: center;
+    padding: 5px;
+    color: #999FA6;
+    font-weight: 500;
+}
+.calendar .dates{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+.calendar .dates .date{
+    /* border: 1px solid rebeccapurple; */
+        /* text-align: center; */
+    padding:5px;
+    margin: auto;
+    font-weight: 600;
+    width:2rem;
+    height: 2rem;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+.calendar .dates .date.active{
+    background-color: #ff5869;
+    color: #fff;
+}
+/* Hover effect for any date */
+.calendar .dates .date:hover {
+    background-color: rgb(255, 137, 137); /* light red/pink on hover */
+    color: #ffffff;                /* text color on hover */
+    cursor: pointer;            /* pointer to show clickable */
+    transition: 0.01s;           /* smooth color transition */
+}
+
+/* Marked date (like events) */
+.calendar .dates .date.mark {
+    background-color: rgba(50, 205, 50, 0.6);  /* limegreen for marked date */
+    color: #fff;                /* white text */
+    border: 2px solid greenyellow;
+    border-radius: 50%;         /* optional, make circle */
+    transition: 0.3s;           /* smooth transition */
+}
+/* .calendar .dates .date.mark:hover {transform: scale(1.3);} */
+.calendar .dates .date.inactive{
+    color: #d2d2d2;
+}
+.calendar .dates .date.inactive:hover{
+    color: #fff;
+}
+
+/* flex setting start */
+.calendar .cal_header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.calendar .cal_header button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar .dates .date{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+/* flex setting end */
+
+/* grid setting start */
+.calendar .days{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+/* grid setting end */
+
+/* popup_data_block  styling start*/
+.popup_data_block{
+    display: flex;
+    gap:5px;
+    font-size: 1rem;
+    flex-direction: column;
+    width: max-content;
+    position: absolute;
+    bottom: 100%;                   /* parent के ऊपर दिखे */
+    left: 50%;                      /* horizontally center parent के respect में */
+    transform: translate(-50%, 50%);    /* center align correction */
+    background-color: rgba(0, 0, 0, 0.8); /* dark background */
+    color: #fff;                    /* text color */
+    padding: 10px 15px;
+    border-radius: 5px;
+    pointer-events: none;           /* cursor hover tooltip पर block न करे */
+    opacity:1;
+    transition: opacity 0.2s ease;  /* smooth fade in/out */
+    z-index: 3;
+
+}
+.popup_data_block.hidden{
+    /* display: none; */
+    opacity:0;
+}
+/* popup_data_block  styling end*/
+
+
+/* calandr styling end */
+    
+
+/* body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f0f2f5;
+    margin: 0;
+}
+
+.calendar {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    padding: 20px;
+    width: 350px;
+}
+
+.cal_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.cal_header button {
+    background: #3498db;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.cal_header button:hover {
+    background: #2980b9;
+}
+
+.monthYear {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 8px;
+    text-align: center;
+    font-weight: bold;
+    color: #555;
+}
+
+.day {
+    padding: 8px 0;
+}
+
+.dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.date {
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.date:hover {
+    background: #e6f7ff;
+}
+
+.date.inactive {
+    color: #ccc;
+}
+
+.date.active {
+    background: #3498db;
+    color: white;
+    font-weight: bold;
+} */

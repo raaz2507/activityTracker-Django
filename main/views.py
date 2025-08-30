@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
-from .forms import loginForm, singupForm
+from .forms import loginForm, SignUpForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -9,11 +9,11 @@ from django.contrib import messages
 
 def home(request):
     usr = request.session.get('login_user')
-    return render(request, 'home.html', { 'userName':usr})
+    return render(request, 'home.html')
 def about_page_view(request):
     user = request.session.get('login_user')
     
-    return render(request, 'about.html', { 'user': request.user})
+    return render(request, 'about.html')
 
 def login_view(request):
     if request.method == "POST":
@@ -37,7 +37,7 @@ def login_view(request):
     # GET request ke liye bhi 'next' pass karna hoga
     next_url = request.GET.get('get', '')
     
-    return render(request, "login.html",{ 'user':request.user, 'form':form, 'next': next_url}) 
+    return render(request, "login.html",{'form':form, 'next': next_url}) 
 
 
 def logout_view( request ):
@@ -48,13 +48,13 @@ def logout_view( request ):
 
 def singup_view(request):
     if request.method == "POST":
-        form=  singupForm(request.POST)
+        form=  SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user) # signup होते ही login करा देंगे
             return redirect('login')
     else:
-        form = singupForm()
+        form = SignUpForm()
     return render(request, "singup.html", {'form': form})
 
 from .models import myuser
@@ -85,8 +85,8 @@ from .models import activity_schema
 @login_required( login_url= 'login')
 def selectActivity_view(request):
     activites =  activity_schema.objects.all()
-    print(activites)
-    return render(request, 'selectActivity.html', {'user': request.user, 'all_activities':activites})
+    # print(activites)
+    return render(request, 'selectActivity.html', {'all_activities':activites})
 
 # activites_slugify_map={ slugify(activite.activity_name): activite.activity_name for activite in activity_schema.objects.all()}
 
@@ -110,7 +110,7 @@ def add_record_view(request, pk):
         form = userRecordsForm(activity)
         form.schema = activity
 
-    return render(request, "record_form.html", {"form": form, "activity": activity, "messages": messages, 'user': request.user })
+    return render(request, "record_form.html", {"form": form, "activity": activity, "messages": messages })
 
 
 
@@ -143,19 +143,14 @@ def record_edit_view(request, record_id):
         form = userRecordsForm(activity, initial=initial_data)
         form.schema = activity
 
-    return render(request, 'record_form.html', {"form": form, "activity": activity, "messages": messages, 'user': request.user})
+    return render(request, 'record_form.html', {"form": form, "activity": activity, "messages": messages})
 
 
 
 @login_required(login_url= 'login')
 def viewRecordPage(request):
     records = userRecords.objects.filter(usr_id = request.user)
-    # for record in records:
-    #     data = { }
-    data = records
-    print(data)
-#     data= Record.objects.filter(usr_id= user)
-    return render(request, 'viewRecord.html', {'data': data, 'user': request.user })
+    return render(request, 'viewRecord.html', {'data': records })
 
 @login_required(login_url='login')
 def record_delete_view(request, record_id):
@@ -173,16 +168,15 @@ def record_delete_view(request, record_id):
 
 
 # #chart views
-# import json
+import json
 # from django.db.models import Count
 @login_required(login_url='login')
 def chart_view(request):
     # user = myuser.objects.filter(user_id= request.user).first()
-    records = userRecords.objects.filter(usr_id=request.user)
-
+    records = userRecords.objects.filter(usr_id=request.user).values('date', 'start_time', 'end_time', 'activity_name', 'source', 'trigger', 'extra');
     data = {
-        "chart1": sourceAnalize(records),
-        "chart2": triggerReason(records),
+        # "chart1": sourceAnalize(records),
+        # "chart2": triggerReason(records),
         # "chart3": source_weekly_chart(user),
     #   "chart13":{
     #     'default_type':'pie',
@@ -191,7 +185,7 @@ def chart_view(request):
     #     "data": [12, 19, 3, 5, 2, 3],
     # },   
     }
-    return render(request, 'charts.html', {'chart_data': json.dumps(data), 'user': request.user})
+    return render(request, 'charts.html', {'chart_data': json.dumps(data)})
 
 # ''' chart releted function start '''
 
@@ -281,73 +275,86 @@ def triggerReason(records)->dict:
 #     return context
 # ''' chart releted function end '''
 
-# calander vies
-# import calendar
-# from datetime import datetime
+# calendar views
 
-# from django.shortcuts import render, redirect
-from datetime import datetime
-import calendar ,json
-# from .models import Record  # अपने model को import करें
 
-from bs4 import BeautifulSoup  # पहले ensure करें कि यह install है: pip install beautifulsoup4
 @login_required(login_url='login')
-def yearly_calendar(request, year=None):
-    if year is None:
-        year = datetime.now().year
+def calendar_view(request):
+    return render(request, 'calendar.html')
 
-    usr = request.session.get('user')
-    user_records = userRecords.objects.filter(usr_id = request.user)
-    record_dates = [rec.date for rec in user_records if rec.date.year == year]
+@login_required(login_url='login')
+def get_calandar_data(request, year):
+    user_records={}
+    if isinstance(year, int):
+        user_records = userRecords.objects.filter(usr_id= request.user, date__year= year).values('date', 'start_time', 'end_time', 'activity_name', 'source', 'trigger', 'extra')
+        # print(list(user_records))
+        return JsonResponse(list(user_records), safe=False)
+    
+    return JsonResponse({'error': "invalid year"}, status= 400)
 
-    cal = calendar.HTMLCalendar(calendar.SUNDAY)
-    months = []
-    months_json_data = []
 
-    for month in range(1, 13):
-        month_name = calendar.month_name[month]
-        html_month = cal.formatmonth(year, month)
 
-        month_record_days = [d.day for d in record_dates if d.month == month]
+# from datetime import datetime
+# import calendar ,json
 
-        # ✅ अब HTML में marked days को class दो
-        soup = BeautifulSoup(html_month, 'html.parser')
-        for td in soup.find_all('td'):
-            try:
-                day = int(td.get_text(strip=True))
-                if day in month_record_days:
-                    td['class'] = td.get('class', []) + ['marked-day']
-            except ValueError:
-                pass  # Empty or non-numeric tds
+# from bs4 import BeautifulSoup  # पहले ensure करें कि यह install है: pip install beautifulsoup4 
+# @login_required(login_url='login')
+# def yearly_calendar(request, year=None):
+#     if year is None:
+#         year = datetime.now().year
 
-        final_html_month = str(soup)
+#     usr = request.session.get('user')
+#     user_records = userRecords.objects.filter(usr_id = request.user)
+#     record_dates = [rec.date for rec in user_records if rec.date.year == year]
 
-        months.append({
-            'name': month_name,
-            'html': final_html_month,
-            'marked_days': month_record_days,
-            'month_number': month,
-        })
+#     cal = calendar.HTMLCalendar(calendar.SUNDAY)
+#     months = []
+#     months_json_data = []
 
-        months_json_data.append({
-            'name': month_name,
-            'marked_days': month_record_days,
-            'month_number': month,
-        })
+#     for month in range(1, 13):
+#         month_name = calendar.month_name[month]
+#         html_month = cal.formatmonth(year, month)
 
-    months_json_data = json.dumps(months_json_data)
+#         month_record_days = [d.day for d in record_dates if d.month == month]
 
-    return render(request, 'calander.html', {
-        'year': year,
-        'months': months,
-        'months_json': months_json_data, 
-        'user': request.user,
-    })
+#         # ✅ अब HTML में marked days को class दो
+#         soup = BeautifulSoup(html_month, 'html.parser')
+#         for td in soup.find_all('td'):
+#             try:
+#                 day = int(td.get_text(strip=True))
+#                 if day in month_record_days:
+#                     td['class'] = td.get('class', []) + ['marked-day']
+#             except ValueError:
+#                 pass  # Empty or non-numeric tds
+
+#         final_html_month = str(soup)
+
+#         months.append({
+#             'name': month_name,
+#             'html': final_html_month,
+#             'marked_days': month_record_days,
+#             'month_number': month,
+#         })
+
+#         months_json_data.append({
+#             'name': month_name,
+#             'marked_days': month_record_days,
+#             'month_number': month,
+#         })
+
+#     months_json_data = json.dumps(months_json_data)
+
+#     return render(request, 'calendar.html', {
+#         'year': year,
+#         'months': months,
+#         'months_json': months_json_data, 
+#         'user': request.user,
+#     })
 
 
 from django.http import JsonResponse
 def userAccountManage(request, user_id=None, del_user_id=None):
-    print(user_id, del_user_id)
+    # print(user_id, del_user_id)
     if del_user_id:
         user = get_object_or_404(myuser, usr_id = del_user_id)
         # user.delete()

@@ -1,5 +1,6 @@
 footer {
   margin: 0 auto;
+  margin-top: auto;
   width:90%;
   background: linear-gradient(to right, #1f1c2c, #928dab);
   color: hsl(0, 0%, 100%);

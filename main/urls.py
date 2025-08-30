@@ -6,9 +6,9 @@ urlpatterns = [
 
     # login and singup 
     path( 'login/', views.login_view, name = "login" ),
-    path('logout/', views.logout_view, name='logout'),
+    path( 'logout/', views.logout_view, name='logout'),
     path( 'signup/', views.singup_view, name="signup" ),
-     path('change_user_profile/<int:user_id>/', views.change_user_profile, name='change_user_profile'),
+    path( 'change_user_profile/<int:user_id>/', views.change_user_profile, name='change_user_profile'),
 
     # #record related 
     path('selectActivity/', views.selectActivity_view, name='selectActivity'),
@@ -19,9 +19,9 @@ urlpatterns = [
     
     #record reprentations
     # calander urls
-    # path('calander/', views.calander_view, name='calander'),
-    path('calendar/', views.yearly_calendar, name='yearly_calendar'),
-    path('calendar/<int:year>/', views.yearly_calendar, name='yearly_calendar_by_year'),
+    path('calendar/', views.calendar_view, name='calendar'),
+    path('calendar_data/<int:year>/', views.get_calandar_data, name='get_calandar_data'),
+    # path('calendar/<int:year>/', views.yearly_calendar, name='yearly_calendar_by_year'),
 
     #charts view
     path('charts/', views.chart_view, name="charts"),

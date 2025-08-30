@@ -1,9 +1,18 @@
 
 <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="{% url 'selectActivity' %}">select Activity</a></li>
-    <li><a href="{% url 'viewRecord' %}">view Record</a></li>
-    <li><a href="{% url 'yearly_calendar' %}">View Calander</a></li>
-    <li><a href="{% url 'charts' %}">View Chart</a></li>
-    
+    <li>
+        <a class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+    </li>
+    <li>
+        <a class="{% if request.resolver_match.url_name == 'selectActivity' %}active{% endif %}" href="{% url 'selectActivity' %}">select Activity</a>
+    </li>
+    <li>
+        <a class="{% if request.resolver_match.url_name == 'viewRecord' %}active{% endif %}" href="{% url 'viewRecord' %}">view Record</a>
+    </li>
+    <li>
+        <a class="{% if request.resolver_match.url_name == 'calendar' %}active{% endif %}" href="{% url 'calendar' %}">View Calander</a>
+    </li>
+    <li>
+        <a class="{% if request.resolver_match.url_name == 'charts' %}active{% endif %}" href="{% url 'charts' %}">View Chart</a>
+    </li>
 </ul>

@@ -45,7 +45,12 @@ nav ul {
   text-transform: capitalize;
 }
 
-
+nav ul li a.active{
+  background-color: rgba(78, 84, 200, 0.682);
+  /* background: conic-gradient(red, yellow, green, blue); */
+  /* background: radial-gradient(circle, red, blue); */
+  /* background: linear-gradient(rgba(78, 84, 200, 0.7), rgba(78, 84, 200, 0.0)); */
+}
 
 nav ul li a {
   color: white;
