@@ -1,54 +1,220 @@
+:root{
+    --bg_color : white;
+    --curve_color: hsla(0, 0%, 94%, 0.7);
+    --li-height :2rem;
+}
+
+/* main *{ border: 1px solid red;} */
 main{
-    width:90%;
-    margin: 0 auto;
-    /* border: 2px solid pink; */
-    padding:1rem;
-    background-color: rgba(245, 245, 245, 0.7);
-    box-shadow: 0px 0px  13px -3px rgba(0, 0, 0, 0.4) ;
-    border-radius: 5px;
+    margin-top: 1rem;
 }
-main .container{
-    margin: 0 auto;
-    width:500px;
-    border: 2px dashed hsla(0, 100%, 50%, 0.8);
-    padding: 5px;
-    border-radius: 10px;
-    box-shadow: 13px 13px 13px 0px hsla(0, 0%, 0%, 0.2);
-    outline: 5px solid rgba(255, 241, 215, 0.9);
-    overflow: hidden;
-    background-color: rgba(250, 235, 215, 0.911);
+
+main aside{
+    background-color: rgba(135, 207, 235, 0.8);
+
 }
-.chartArea{
-    width: 500px;
-    height: 500px;
-    /* margin: 50% auto;
-    transform: translate(0 , -100%); */
+main aside .toggle_nav{
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 1rem;
+}
+main aside .toggle_nav svg,
+main aside .toggle_nav img{
+    width:100%;
+    height:auto;
+}
+
+main aside nav{
+    padding: 0;
+    margin-left: 1rem;
+}
+main aside nav ul{
+    list-style: none;
+}
+main aside nav ul li{
+    width: 100%;
+    padding: 10px 0;
+    border-top-left-radius: var(--li-height);
+    border-bottom-left-radius: var( --li-height);
+    /* position: relative; */
     
 }
+main aside nav ul li .chart_name{
+    font-size: 1rem;
+    line-height: 3rem;
+}
+main aside nav ul li.selected{
+    background-color: var(--bg_color) !important;
+    color: black !important;
+    
+}
+/* --------- curve outside ---------- */
 
-.buttonArea{
+/* main aside nav ul li.selected::before{
+    content: "";
+
+    position: absolute;
+    top:-4rem;
+    right:0;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    box-shadow: 3px 3px 0 3px var(--bg_color);
+    background-color: transparent;
+} */
+main aside nav ul li a{
+    
+    text-decoration: none;
+    margin-left: 1rem;
+}
+main aside nav ul li a .icon_box{
+    width: 2rem;
+    height: 2rem;
+    overflow: hidden; 
+
+}
+main aside nav ul li a .icon_box img,
+main aside nav ul li a .icon_box svg{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+main aside nav ul li a .chart_name{
+    line-height: var(--li-height);
+    color: rgb(192, 192, 255);
+}
+
+
+/* chart scetion start */
+main .charts_section {
+    background-color: var(--bg_color);
+    padding: 1rem 1rem;
+}
+main .charts_section .chart_container{
+    box-shadow: 0px 0px 13px -1px hsla(0, 0%, 0%, 0.9);
+    outline: 5px solid rgba(255, 241, 215, 0.9);
+    overflow: hidden;
+    background-color: rgba(250, 235, 215, 0.911); 
+    border-radius: 10px;
+    width: 500px;
+    height: auto;
+}
+main .charts_section .chart_container .chart_display{
+    padding: 1rem;
+    /* parent ke according stretch hoga */
+    width: 100%;       
+    /* maximum width set karne ke liye */
+    /* max-width: 400px; */
+     /*desired height  */
+    height: auto; 
+    /* center align */    
+    margin: auto;      
+}
+main .charts_section .chart_container .chart_display #TriggersChart,
+main .charts_section .chart_container .chart_display #SourceChart {
+    width:100%;
+    height: 100%;
+
+}
+main .charts_section .chart_container .chart_display #TimeDurationChart{
+    width:100%;
+    height: 100%;
+}
+main .charts_section .chart_container .ChartTypeSelector{
+    border-bottom: 1px solid brown;
+    padding: 10px 1rem;
+}
+
+
+/* Container */
+main .charts_section .chart_container .duration_selector {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    /* column-gap:2rem; */
-}
-.buttonArea span{
-    flex: 1;
-    flex-basis: auto;
-    text-transform: capitalize;
-    border: 0.02px solid black;
-    padding: 6px 12px;
+    gap: 10px;  /* spacing between elements */
+    padding: 8px 12px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
 }
 
-/* flex stting start */
+/* Date input styling */
+main .charts_section .chart_container .duration_selector input[type="date"] {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Buttons */
+main .charts_section .chart_container .duration_selector button {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+/* Hover effect */
+main .charts_section .chart_container .duration_selector button:hover {
+    background-color: #e0e0e0;
+}
+
+/* Selected button */
+main .charts_section .chart_container .duration_selector button.selected-duration {
+    background-color: #007bff;
+    /* background-color: rgba(0, 128, 0, 0.3); */
+    color: #fff;
+    border-color: #007bff;
+}
+
+
+/* flex setting start */
 main{
     display: flex;
-    flex-wrap: wrap;
-    row-gap: 1.5rem;
-    column-gap: 1.5rem;
+    flex-direction: row;
+    align-items: stretch;
+}
+main aside{
+    flex: 0 0 15rem;
+}
+
+main aside nav ul li a{
+    display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    gap:1rem;
 }
-/* flex stting end */
+main .charts_section{
+    flex: 1 1 100%;
+}
+
+main .charts_section{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    gap:2rem;
+    row-gap: 20px;
+}
+main .charts_section .chart_container .duration_selector{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+main .charts_section .chart_container .ChartTypeSelector{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly; 
+}
+/* flex setting end */
+
+
+

@@ -3,7 +3,8 @@ ACTIVITY_SCHEMA = {
         "source":{"Books" : "", "Videos" : "", "Online Courses" : "", "Notes" : "", "Apps" : ""},
         "trigger":{"Interest" : "", "Exam Prep" : "", "Routine" : "", "Stress Relief" : ""},
         "extra":{},
-        "color": "#ea580c"
+        "color": "#ea580c",
+        "icon": "Activity_icons/study_icon.svg"
     },
     "Sports / Gym":{
         "source":{"Outdoor" : "", "Gym Equipment" : "", "Coach/Trainer" : ""},
@@ -56,8 +57,8 @@ ACTIVITY_SCHEMA = {
     "Masturbation / Personal":{
         "source":{"Videos" : "", "Chat" : "", "Interaction" : "", "Device" : ""},
         "trigger":{"Boredom" : "", "Stress Relief" : "", "Routine" : "", "Curiosity" : "", "Long Gap" : ""},
-        "extra":{},
-        "color": "",
+        "extra":{"Times": ""},
+        "color": "#fff",
     }
 }
 # {% for category, form in forms_dict.items %}

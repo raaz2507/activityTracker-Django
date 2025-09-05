@@ -1,4 +1,4 @@
-:root{
+/* :root{
     --color1: #ea580c;
     --color2: #d97706;
     --color3: #65a30d;
@@ -8,7 +8,7 @@
     --color7: #db2777;
     --color8: #2563eb;
     --color9: #9f57e0;
-}
+} */
 
 main{
     padding: 10px 20px;
@@ -38,8 +38,16 @@ main a{
     justify-content: space-evenly;
     gap: 20px 10px;
 }
+.activity_card .activity_card_header{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
 /* .activity_card{    flex: 0 0 20rem;} */
 /* flex setting end */
+.sectionRow{
+    min-height: 18rem;
+}
 .sectionRow::after{
     position: absolute;
     left:0;
@@ -75,24 +83,54 @@ main a{
     content: "custmized"
 }
 .activity_card{
-    width: 23rem;
+    width: 20rem;
     border-radius: 10px;
     /* border:2px dashed rgba(245, 222, 179, 0.6); */
     outline: none !important;
-    padding:1rem;
+    padding:8px 5px;
     color: white;
     box-shadow: 2px 2px 13px -2px rgba(0, 0, 0, 0.541);
     user-select: none;
     backdrop-filter: blur(1px);
 }
-.activity_card .heading{
+.activity_card .activity_card_header{
+    padding: 0 3px 5px 3px;
+    border-bottom: 2px solid white;
+    background-color: rgba(130, 111, 0, 0.3);
+    border-radius: 10px;
+}
+.activity_card .activity_card_header .activity_icon{
+    width: 2rem;
+    height: 2rem;
+
+}
+.activity_card .activity_card_header .activity_icon svg, 
+.activity_card .activity_card_header .activity_icon img{
+    width: 100%;
+    height: auto;
+
+}
+.activity_card .activity_card_header .heading{
+
     text-transform: capitalize;
+    font-size: 1.3rem;
+    margin-left: 1rem;
+}
+.activity_card .activity_card_header .favBtn{
+    min-width: 1.8rem;
+    min-height: 1.8rem;
+    max-width: 1.8rem;
+    max-height: 1.8rem;
+    margin-left: auto;
 }
 .activity_card .title{
+    font-size: 1rem;
     text-transform: capitalize;
     margin: 1rem auto .3rem auto;
 }
 .activity_card ul {
+    font-size: .9rem;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
     list-style: none;
     padding: 0 1rem;
     margin: 10px 0;
@@ -104,7 +142,35 @@ main a{
     margin: 3px 5px;
     font-family: 'Courier New', Courier, monospace;
 }
-.activity_card[data-activity-id="1"]{
+
+.activity_card .delBtnForm button{
+    background-color: rgba(255, 0, 0, 0.8);
+}
+.activity_card .btn.editActiviyBtn{
+    background-color: rgba(0, 128, 0, 0.7);
+}
+.activity_card .btn.delBtnForm button, .activity_card .btn.editActiviyBtn{
+    width: 5rem;
+    font-size: 1.1rem;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 5px;
+    /* margin: 1rem auto; */
+}
+.userDefine_activity_card .cardFooter{
+    margin: 0 auto;
+    margin-top: 1rem;
+    
+    width: 80%;
+    padding: 10px 0;
+    /* border: 2px solid black; */
+    background-color: rgba(255, 255, 255, 0.414);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 10px;
+}
+/* .activity_card[data-activity-id="1"]{
     background-color: var(--color1);
     outline: 5px solid var(--color1);
 }
@@ -143,7 +209,7 @@ main a{
 }
 .activity_card[data-activity-id="9"] ul.source h3{
     color: #E09F57;
-}
+} */
 
 /* #createActivityBtn{
     font-size: 1.5rem;
@@ -172,27 +238,36 @@ main a{
     margin: 2rem auto;
 }
  */
+ a:has(#createActivityBtn){
+    display: inline-block;
+    width:10rem;
+    height: 5rem;
+ }
 #createActivityBtn {
-    flex: 0 0 15rem;               /* width control */
-    min-height: 10rem;             /* height set */
-    border: 2px dashed var(--bs-primary); /* dashed border for add effect */
+    /* align-self: flex-start; */
+    width:20rem;
+    height: 15rem;             /* height set */
+    border: 2px dashed #0d6efd; /* dashed border for add effect */
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    color: var(--bs-primary);
-    background: rgba(255, 255, 255, 0.05);
+    justify-content: space-evenly;
+    color: #0d6efd;
+    background: rgba(255, 255, 255, 0.887);
+    outline: 4px solid rgba(255, 255, 255, 0.887);
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     cursor: pointer;
-    transition: all 0.03s ease;
+    /* transition: all 0.03s ease; */
 }
 
 /* Hover effect */
 #createActivityBtn:hover {
-    background: var(--bs-primary);
+    background: #0d6efd;
     color: white;
-    transform: scale(1.05);
+    border: 2px dashed white;
+    outline: 4px solid #0d6efd;
+    /* transform: scale(1.05); */
     box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
 
@@ -206,21 +281,22 @@ main a{
 
 /* Plus icon styling */
 #createActivityBtn .add_sing {
-    font-size: 2.5rem;
-    font-weight: bold;
-    line-height: 1;
-    border-radius: 50%;
-    border: 2px solid currentColor;
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 10rem;
+    height: 10rem;
     transition: all 0.02s ease;
 }
-
+#createActivityBtn .add_sing svg, #createActivityBtn .add_sing img{
+    width:100%;
+    height: auto;
+}
 /* Plus hover effect */
 #createActivityBtn:hover .add_sing {
-    background: white;
-    color: var(--bs-primary);
+    /* background: white; */
+    color: #0d6efd;
 }
+
+
+/* 
+#userDefineActivitys *{
+    border: 1px solid red;
+} */

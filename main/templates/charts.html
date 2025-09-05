@@ -9,33 +9,83 @@
 
 {% block content %}
     <main>
-        <!-- <div class="container">
-            <div class="chartArea">
-                <canvas id="myChart1" height="500" width="500"></canvas>
+        <aside>
+            <div class="toggle_nav">
+                <div class="toggle_btn">
+                    <img src="{%static 'img/grid-svgrepo-com.svg' %}" alt="">
+                </div>
             </div>
-            <div class="buttonArea" id="chart1choice">
-                {% include "chartsChoiceTemplat.html" %}
-                
-            </div>
-        </div>
+            <nav class="chartsNav">
+                <ul>
+                    {% for data in activity_meta.values %}
+                    <li class="{% if forloop.first %} selected {% endif %}" style="background-color: {{ data.color }};" data-activity_id ={{data.id}}>
+                        <a href="#">
+                            <span class="icon_box"><img src="{{ data.icon_url }}" alt="icon"></span>
+                            <span class="chart_name">{{ data.activity_name }}</span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </aside>
+        <div class="charts_section">
 
-        <div class="container">
-            <div class="chartArea">
-                <canvas id="myChart2" height="500" width="500"></canvas>
+            <div class="chart_container">
+                <div class="chart_display">
+                    <canvas id="TriggersChart" height="200" width="300" role="img"></canvas>
+                </div>
+                <div class="ChartTypeSelector" id="TriggerChartChoice">
+                   <!-- radio button will be show there -->
+                </div>
+                <div class="duration_selector" id="TriggersDurationSelector">
+                    <input type="date" name="" id="Dateset4TriggersDuration">
+                    <button type="button" data-period="day" >By Day</button>
+                    <button type="button" data-period="month">By Month</button>
+                    <button type="button" data-period="year">By Year</button>
+                    <button type="button" data-period="all" class="selected-duration">All</button>
+                </div>
             </div>
-            <div class="buttonArea" id="chart2choice">
-                {% include "chartsChoiceTemplat.html" %}
-                
+
+            <div class="chart_container">
+                <div class="chart_display">
+                    <canvas id="SourceChart" height="200" width="300" role="img"></canvas>
+                </div>
+                <div class="ChartTypeSelector" id="SourceChartChoice">
+                    <!-- radio button will be show there -->
+                </div>
+                <div class="duration_selector" id="SourceDurationSelector">
+                    <input type="date" name="" id="Dateset4SourceDuration">
+                    <button type="button" data-period="day">By Day</button>
+                    <button type="button" data-period="month">By Month</button>
+                    <button type="button" data-period="year">By Year</button>
+                    <button type="button" data-period="all" class="selected-duration">All</button>
+                </div>
             </div>
-        </div> -->
+
+            <div class="chart_container">
+                <div class="chart_display">
+                    <canvas id="TimeDurationChart" height="300" width="300" role="img"></canvas>
+                </div>
+                <div class="ChartTypeSelector" id="TimeDurationChartChoice">
+                    <!-- radio button will be show there -->
+                </div>
+                <div class="duration_selector" id="TimeChartDurationSelector">
+                    <input type="date" name="" id="Dateset4TimeChartDuration">
+                    <button type="button" data-period="day">By Day</button>
+                    <button type="button" data-period="month">By Month</button>
+                    <button type="button" data-period="year">By Year</button>
+                    <button type="button" data-period="all" class="selected-duration">All</button>
+                </div>
+            </div>
+
+
+            
+        </div>
     </main>
 {% endblock content %}
 {% block javascript %}
 <script src="{% static 'js/chart.umd.js' %}"></script>
-<script>
-    const allChartData = JSON.parse('{{ chart_data|escapejs }}');
-    
-</script>
+<!-- <script>const allChartData = JSON.parse('{{ chart_data|escapejs }}');</script> -->
 <script src="{% static 'js/charts_template.js' %}"></script>
 {% endblock javascript %}
 

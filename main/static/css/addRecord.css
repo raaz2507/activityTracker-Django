@@ -24,8 +24,8 @@ main >a button , form button {
 
 
 form {
-    /* width: 60%; */
-    max-width: 600px;
+    width: 40rem;
+    max-width: 40rem;
     margin: 30px auto;
     padding: 20px;
     background-color: #fff0f5;  /* light pink */
@@ -109,9 +109,38 @@ button[type="reset"] {
 button:hover {
     opacity: 0.85;
 }
-@media  only screen and (min-width:400px){
+@media  only screen and (max-width:400px){
 form {
     width: auto;
 }
     
+}
+
+
+p:has(input[type="date"]), 
+p:has(input[type="time"]){
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    gap: 10px 1rem ;
+}
+
+p:has(input[type="date"]) label, 
+p:has(input[type="time"]) label{
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 7rem;
+}
+p:has(input[type="date"]) input[type="date"], 
+p:has(input[type="time"]) input[type="time"]{
+    /* flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 15rem; */
+    flex:1;
+}
+p:has(input[type="date"]) button, 
+p:has(input[type="time"]) button{
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 5rem;
 }

@@ -21,11 +21,13 @@ class MainConfig(AppConfig):
                     activity_schema.objects.get_or_create(
                         activity_name=key,
                         defaults = {
+                            'usr_id' : None,
                             "slug" : slugify(key),
                             "source": value['source'],
                             "trigger" : value['trigger'],
                             "extra": value.get('extra', {}),
-                            "color_field": value.get('color', "#fff"),
+                            "color_field": value.get('color', "#fff") or '#FFFFFF',
+                            'icon': value.get('icon', 'Activity_icons/default_icon.svg') or 'Activity_icons/default_icon.svg',
                         }
                     )
                 except IntegrityError:

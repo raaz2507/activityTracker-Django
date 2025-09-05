@@ -20,13 +20,13 @@
             <th> End Time</th>
             <th> Source</th>
             <th> Triger /cose </th>
-            <th> Times</th>
+            <th> Extra</th>
             <th> Actions </th>
         </thead>
         <tbody>
             {% for row in data %}
-                <tr>
-                    <td>{{ row.activity_name }}</td>
+                <tr style="background : linear-gradient(to right, {{ row.activity_id.color_field }} 0%, #fff 100%);">
+                    <td>{{ row.activity_id.activity_name }}</td>
                     <td>{{ row.date }}</td>
                     <td>{{ row.start_time }}</td>
                     <td>{{ row.end_time }}</td>

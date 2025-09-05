@@ -80,15 +80,121 @@ def change_user_profile(request, user_id):
 
 # record related functions
 
-from .models import activity_schema
+from .models import activity_schema, userFavrateActivity
 
-@login_required( login_url= 'login')
+@login_required( login_url = 'login')
 def selectActivity_view(request):
-    activites =  activity_schema.objects.all()
+    pre_activites =  activity_schema.objects.filter(usr_id=None)
+    favrateActivitysList =  list(userFavrateActivity.objects.filter(usr_id= request.user).values_list('activity_id', flat=True))
+    userDefineActiviyAll =  activity_schema.objects.filter(usr_id= request.user)
+    
+    activites=[]
+    favrateActivitys =[]
+    for act in pre_activites:
+        if act.id in favrateActivitysList:
+            favrateActivitys.append(act)
+        else:
+            activites.append(act)
+
+    userDefineActiviy =[]
+    for act in userDefineActiviyAll:
+        if act.id in favrateActivitysList:
+            favrateActivitys.append(act)
+        else:
+            userDefineActiviy.append(act)
+    print(userDefineActiviy)
+    # print(favrateActivitys)
     # print(activites)
-    return render(request, 'selectActivity.html', {'all_activities':activites})
+    return render(request, 'selectActivity.html', {'all_activities':activites, 'userDefineActiviy': userDefineActiviy, 'favrateActivitys':favrateActivitys})
 
 # activites_slugify_map={ slugify(activite.activity_name): activite.activity_name for activite in activity_schema.objects.all()}
+
+
+def toggleFavActivity(request, activity_id):
+    if request.user.is_authenticated:
+        try:
+            activity = get_object_or_404(activity_schema, id=activity_id)
+
+            # Check if already exists
+            fav_entry = userFavrateActivity.objects.filter(
+                usr_id=request.user,
+                activity_id=activity
+            ).first()
+
+            if fav_entry:
+                # अगर मौजूद है तो delete कर दो
+                fav_entry.delete()
+                return JsonResponse({
+                    "success": True,
+                    "action": "removed",
+                    "message": "Activity removed from favorites"
+                })
+            else:
+                # नहीं है तो add करो
+                userFavrateActivity.objects.create(
+                    usr_id=request.user,
+                    activity_id=activity
+                )
+                return JsonResponse({
+                    "success": True,
+                    "action": "added",
+                    "message": "Activity added to favorites"
+                })
+
+        except Exception as e:
+            return JsonResponse({
+                "success": False,
+                "message": str(e)
+            })
+    else:
+        return JsonResponse({
+            "success": False,
+            "message": "User not authenticated"
+        })
+
+
+from .forms import ActivitySchemaForm
+@login_required(login_url='login')
+def add_new_activty_view(request):
+    if request.method == "POST":
+        form = ActivitySchemaForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_activity = form.save(commit=False)
+            new_activity.usr_id =  request.user
+            new_activity.save()
+            messages.success(request, "new Acctiviy addess sussesfuly")
+            print("susssse")
+            return redirect('selectActivity')
+        else:
+            print("error")
+            messages.error(request, "get error to save new activity.")
+            # form = ActivitySchemaForm()  
+    else:
+        print("new form")
+        form = ActivitySchemaForm()
+    return render(request, "addNewActivity.html",{ "form": form })
+@login_required(login_url='login')
+def edit_new_activty_view(request, activityId):
+    activity =  get_object_or_404(activity_schema, usr_id = request.user, pk = activityId)
+    if request.method == "POST":
+        form = ActivitySchemaForm(request.POST, request.FILES, instance= activity)
+        if form.is_valid:
+            form.save()
+            messages.success(request, "Activiy Update sussesfuly")
+            return redirect('selectActivity')
+        else:
+            messages.error(request, "cant Update activity.")
+            form = ActivitySchemaForm(instance= activity)
+
+    else:
+        form = ActivitySchemaForm(instance= activity)
+    return render(request, "addNewActivity.html",{ "form": form }) 
+@login_required(login_url='login')
+def del_new_activty_view(request, activityId):
+    obj = get_object_or_404( activity_schema, usr_id = request.user ,pk =  activityId)
+    obj.delete()
+    return redirect('selectActivity')
+
 
 from .forms import userRecordsForm
 
@@ -102,7 +208,7 @@ def add_record_view(request, pk):
         if form.is_valid():
             record = form.save(commit=False)
             record.usr_id = request.user
-            record.activity_name = activity.activity_name
+            record.activity_id = activity
             record.save()
             messages.success(request, "Record saved successfully!")
             return redirect('viewRecord')
@@ -119,7 +225,7 @@ from .models import userRecords
 @login_required(login_url= 'login')
 def record_edit_view(request, record_id):
     record = get_object_or_404(userRecords, pk=record_id)
-    activity = get_object_or_404(activity_schema, activity_name=record.activity_name)
+    activity = get_object_or_404(activity_schema, pk=record.activity_id.id)
 
     if request.method == "POST":
         form = userRecordsForm(activity, request.POST, instance=record)
@@ -165,129 +271,205 @@ def record_delete_view(request, record_id):
         return redirect("viewRecord")
 
 
-
+''' chart releted function end '''
 
 # #chart views
 import json
-# from django.db.models import Count
+from django.db.models import Count
 @login_required(login_url='login')
 def chart_view(request):
-    # user = myuser.objects.filter(user_id= request.user).first()
-    records = userRecords.objects.filter(usr_id=request.user).values('date', 'start_time', 'end_time', 'activity_name', 'source', 'trigger', 'extra');
-    data = {
-        # "chart1": sourceAnalize(records),
-        # "chart2": triggerReason(records),
-        # "chart3": source_weekly_chart(user),
-    #   "chart13":{
-    #     'default_type':'pie',
-    #     'chartTitle':'Test',
-    #     "labels": ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    #     "data": [12, 19, 3, 5, 2, 3],
-    # },   
-    }
-    return render(request, 'charts.html', {'chart_data': json.dumps(data)})
-
-# ''' chart releted function start '''
+    activity_meta = getuserActiviyList(request)
+    print(activity_meta)
+    return render(request, 'charts.html', {'activity_meta': activity_meta})
 
 
-#Trigger reasion 
-from collections import Counter
-def sourceAnalize(records)->dict:
-    # Initialize counter
-    source_counter = Counter()
+from django.conf import settings
+def getuserActiviyList(request):
+     # Step 1: सब activity_ids लें
+    activity_ids = userRecords.objects.filter(usr_id=request.user).values_list("activity_id", flat=True).distinct()
+    
+    charts_meta={}
+    for act_id in activity_ids:
+        schema = activity_schema.objects.filter(id = act_id).values('id', 'color_field','activity_name','icon').first()
+        if schema:
+            charts_meta[act_id] ={
+                'id' : schema['id'],
+                'color': schema['color_field'] or '#fff',
+                'activity_name': schema['activity_name'],
+                'icon_url': request.build_absolute_uri(settings.MEDIA_URL + schema['icon']) if schema['icon'] else None,
+            }
+    return charts_meta
 
-    for record in records:
-        for source in record.source:
-            source_counter[source] += 1
+# 🔹 Common helper for filtering by period
+def filter_by_period(qs, year, month, day):
+    if year and month and day:
+        # Exact day filter
+        qs = qs.filter(date__year=year, date__month=month, date__day=day)
+    elif year and month:
+        # Whole month filter
+        qs = qs.filter(date__year=year, date__month=month)
+    elif year:
+        # Whole year filter
+        qs = qs.filter(date__year=year)
+    # else:
+        # today = date.today()
+        # Default = today
+        # qs = qs.filter()
 
-    # सभी source options को तय order में रखें
-    all_sources = ['videos', 'books', 'comics', 'interction', 'chat']
-    labels = all_sources
-    data = [source_counter.get(source, 0) for source in all_sources]
+    return qs
 
-    context = {
-        'default_type':'bar',
-        'chartTitle':'Source',
-        'labels': labels,
-        'data': data,
-    }
-    return context
+def get_activity_summary(request, act_id, field, year, month, day):
+    """
+    Common helper function for source/trigger chart data
+    field: "source" या "trigger"
+    """
+    schema = activity_schema.objects.filter(id=act_id).values('color_field', 'activity_name', field).first()
+    activity_summary = {}
+
+    if schema:
+        activity_summary = {
+            'activity_name': schema['activity_name'],
+            field: {k: 0 for k in (schema[field] or {}).keys()},
+        }
+
+    today = date.today()
+    qs = userRecords.objects.filter(
+        usr_id=request.user,
+        activity_id=act_id
+    ).values('date', field)
+
+    # Period filter
+    qs = filter_by_period(qs, year, month, day)
+
+    records = qs.values('start_time', 'end_time', field)
+
+    # Counting logic
+    for rec in records:
+        for key, value in rec[field].items():
+            if value:
+                activity_summary[field][key] += 1
+
+    return activity_summary
 
 
-def triggerReason(records)->dict:
-    # Trigger reason counter
-    trigger_counter = Counter()
+# -------- Views -----------
+def TriggerChartData_view(request, act_id, year=None, month=None, day=None):
+    data = get_activity_summary(request, act_id, "trigger", year, month, day)
+    return JsonResponse(data)
 
-    for record in records:
-        for reason in record.trigger:
-            trigger_counter[reason] += 1
 
-    # All possible trigger reasons (order maintained)
-    all_reasons = ['Digital visual', 'social interaction', 'hadNotDoFromLastLong']
-    labels = all_reasons
-    data = [trigger_counter.get(reason, 0) for reason in all_reasons]
+def SourceChartData_view(request, act_id, year=None, month=None, day=None):
+    data = get_activity_summary(request, act_id, "source", year, month, day)
+    return JsonResponse(data)
 
-    context = {
-        'default_type':'pie',
-        'chartTitle':'Trigger Reason',
-        'labels': labels,
-        'data': data,
-    }
-    return context
+from  datetime import datetime, date, time
+def TimeDurationData_view(request, act_id, year=None, month=None, day=None):
+    today = date.today()
+    qs = userRecords.objects.filter(usr_id=request.user,activity_id=act_id).values('date', 'start_time', 'end_time')
 
-# from collections import defaultdict, Counter
-# from django.utils.timezone import now
-# import datetime
-# def source_weekly_chart(user)->dict:
-#     records = Record.objects.filter(usr_id=user).order_by('date')
+    qs = filter_by_period(qs, year, month, day)
+    # "all" में कोई filter नहीं
+    records =qs.values('start_time', 'end_time' )
+    
+    # Duration calculate करना (minutes में)
+    total_duration_minutes = 0
+    for rec in records:
+        start_time = rec['start_time']
+        end_time = rec['end_time']
 
-#     # Step 1: group records by week number
-#     week_source_data = defaultdict(Counter)
-#     min_date = records.first().date if records.exists() else now().date()
+        
+        if start_time and end_time:
+            # Django timeField return करता है time object
+            duration = datetime.combine(today, end_time) - datetime.combine(today, start_time)
+            duration_minutes = duration.total_seconds() / 60
+            total_duration_minutes += duration_minutes
+        
+    return JsonResponse({'total_duration_minutes': total_duration_minutes})
 
-#     for record in records:
-#         week_diff = (record.date - min_date).days // 7
-#         week_label = f"Week {week_diff + 1}"
+# def chartData_view_old(request, period="all"):
+#     # Step 1: सब activity_ids लें
+#     activity_ids = userRecords.objects.filter(usr_id=request.user).values_list("activity_id", flat=True).distinct()
+    
+#     activity_summary = {}
+#     for act_id in activity_ids:
+#         schema = activity_schema.objects.filter(id = act_id).values('color_field','activity_name','icon','source', 'trigger').first()
+#         if schema:
+#             source = schema['source'].keys() if schema['source'] else []
+#             trigger = schema['trigger'].keys() if schema['trigger'] else []
+#             activity_summary[act_id]={
+#                 'color': schema['color_field'] or '#fff',
+#                 'activity_name': schema['activity_name'],
+#                 'icon_url': request.build_absolute_uri(settings.MEDIA_URL + schema['icon']) if schema['icon'] else None,
+#                 'source' : {k: 0 for k in (schema['source'] or {}).keys()}, # हर source key की initial value 0
+#                 'trigger': {k: 0 for k in (schema['trigger'] or {}).keys()}, # हर trigger key की initial value 0
+#                 'total_duration_minutes': 0  # duration जोड़ने के लिए
+#             }
 
-#         for source in record.source:
-#             week_source_data[week_label][source] += 1
+#     # print(activity_summary.keys())
+#     # Step 2: queryset में time filter लगाएँ
+#     today = date.today()
+#     records={}
+#     for act_id in activity_ids:
+#         qs = userRecords.objects.filter(usr_id=request.user,activity_id=act_id).values('date', 'start_time', 'end_time', 'source', 'trigger')
+        
+#         period = period.lower()
+#         if period == "today":
+#             qs = qs.filter(date=today)
+#         elif period == "month":
+#             qs = qs.filter(date__year=today.year, date__month=today.month)
+#         elif period == "year":
+#             qs = qs.filter(date__year=today.year)
+#         # "all" में कोई filter नहीं
+#         records[act_id] =qs.values('start_time', 'end_time', 'source', 'trigger')
+    
+#     # Step 3: source/trigger counting
+#     for act_id in records:
+#         for rec in records[act_id]:
+#             for key, value in rec['source'].items():
+#                 if value:
+#                     # if isinstance(activity_summary[act_id]['source'][key], str):
+#                     #     activity_summary[act_id]['source'][key] = 0
+#                     activity_summary[act_id]['source'][key] +=1
+            
+#             for key, value in rec['trigger'].items():
+#                 if value:
+#                     # if isinstance(activity_summary[act_id]['trigger'][key], str):
+#                     #     activity_summary[act_id]['trigger'][key] = 0
+#                     activity_summary[act_id]['trigger'][key] +=1
 
-#     # Step 2: Collect all weeks & sources
-#     all_weeks = sorted(week_source_data.keys(), key=lambda x: int(x.split()[1]))
-#     all_sources = ['videos', 'books', 'comics', 'interction', 'chat']
+#             # Duration calculate करना (minutes में)
+#             start_time = rec['start_time']
+#             end_time = rec['end_time']
+#             if start_time and end_time:
+#                 # Django timeField return करता है time object
+#                 duration = datetime.combine(today, end_time) - datetime.combine(today, start_time)
+#                 duration_minutes = duration.total_seconds() / 60
+#                 activity_summary[act_id]['total_duration_minutes'] += duration_minutes
 
-#     # Step 3: Prepare dataset format
-#     datasets = []
-#     for source in all_sources:
-#         data = [week_source_data[week].get(source, 0) for week in all_weeks]
-
-#         datasets.append({
-#             'label': source,
-#             'data': data
-#         })
-#     print(datasets)
-#     context = {
-#         'default_type':'line',
-#         'chartTitle':'Source Weekly Chart',
-#         'labels': all_weeks,
-#         'datasets': datasets
-#     }
-#     return context
-# ''' chart releted function end '''
-
-# calendar views
+#     # print(activity_summary[2].keys())    
+#     # print(activity_summary)
+#     return JsonResponse( {'chart_data' : activity_summary})
 
 
 @login_required(login_url='login')
 def calendar_view(request):
     return render(request, 'calendar.html')
-
+    
+from django.db.models import F
 @login_required(login_url='login')
 def get_calandar_data(request, year):
     user_records={}
     if isinstance(year, int):
-        user_records = userRecords.objects.filter(usr_id= request.user, date__year= year).values('date', 'start_time', 'end_time', 'activity_name', 'source', 'trigger', 'extra')
-        # print(list(user_records))
+        user_records = userRecords.objects.filter(
+                usr_id= request.user, 
+                date__year= year
+            ).annotate(
+                activity_name =F("activity_id__activity_name"),
+                color=F("activity_id__color_field"),
+            ).values(
+                'activity_name', 'color', 'date', 'start_time', 'end_time', 'source', 'trigger', 'extra',
+            )
+        print(list(user_records))
         return JsonResponse(list(user_records), safe=False)
     
     return JsonResponse({'error': "invalid year"}, status= 400)

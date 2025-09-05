@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%}site title{% endblock title %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/addNewActivity.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+<main>
+    {% if messages %}
+    {% for msg in messages %}
+    {{msg}}
+    {% endfor %}
+    {% endif %}
+    <form action="" method="POST" name="addNewActivtyForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Add New Activity</legend>
+
+            {{ form.as_p }}
+            <div id="icon-preview" 
+     data-oldurl="{% if form.instance.icon %}{{ form.instance.icon.url }}{% endif %}">
+</div>
+        </fieldset>
+        <fieldset id="source_filds">
+            <legend>Source</legend>
+            
+        </fieldset>
+        <fieldset id="triger_filds">
+            <legend>Triger</legend>
+            
+        </fieldset>
+        <fieldset id="extra_filds">
+            <legend>Extra</legend>
+            
+        </fieldset>
+        <button type="submit">Add</button>
+    </form>
+</main>
+
+    
+{% endblock content %}
+{% block javascript %}
+
+<script src="{% static 'js/addNewActivity.js' %}"></script>
+{% endblock javascript %}

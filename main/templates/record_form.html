@@ -8,7 +8,7 @@
 
 {% block content %}
 <main>
-    <form action="" method="POST">
+    <form action="" method="POST" name="addRecordForm1">
         {% csrf_token %}
         <fieldset>
             <legend> {{activity.activity_name}}</legend>

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'colorfield',
 ]
 
 MIDDLEWARE = [
@@ -109,9 +110,17 @@ USE_I18N = True
 USE_TZ = True
 
 
+import os
+#Media files settings
+MEDIA_URL = '/media/' #prefix for access form Browser
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #actula folder were fils will save
+
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
-import os
+
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 

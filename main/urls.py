@@ -10,8 +10,14 @@ urlpatterns = [
     path( 'signup/', views.singup_view, name="signup" ),
     path( 'change_user_profile/<int:user_id>/', views.change_user_profile, name='change_user_profile'),
 
-    # #record related 
+    # Activity related 
     path('selectActivity/', views.selectActivity_view, name='selectActivity'),
+    path('toggleFavActivity/<int:activity_id>/', views.toggleFavActivity, name='toggleFavActivity'),
+    path('add_new_activty/', views.add_new_activty_view, name= "add_new_activty"),
+    path('del_new_activty/<int:activityId>/', views.del_new_activty_view, name= "del_new_activty"),
+    path('dedit_new_activty/<int:activityId>/', views.edit_new_activty_view, name= "edit_new_activty"),
+    
+    #record relatd crud
     path('addRecord/<int:pk>/', views.add_record_view, name='addRecord'),
     path('viewRecord/', views.viewRecordPage, name=  'viewRecord'),
     path('updateRecord/<int:record_id>', views.record_edit_view, name= 'record_edit'),
@@ -25,6 +31,23 @@ urlpatterns = [
 
     #charts view
     path('charts/', views.chart_view, name="charts"),
+    
+    path('TriggerChartData/<int:act_id>/', views.TriggerChartData_view, name="TriggerChartData"),
+    path('TriggerChartData/<int:act_id>/<int:year>/', views.TriggerChartData_view, name="TriggerChartData"),
+    path('TriggerChartData/<int:act_id>/<int:year>/<int:month>/', views.TriggerChartData_view, name="TriggerChartData"),
+    path('TriggerChartData/<int:act_id>/<int:year>/<int:month>/<int:day>/', views.TriggerChartData_view, name="TriggerChartData"),
+    
+    path('SourceChartData/<int:act_id>/', views.SourceChartData_view, name="SourceChartData_view"),
+    path('SourceChartData/<int:act_id>/<int:year>/', views.SourceChartData_view, name="SourceChartData_view"),
+    path('SourceChartData/<int:act_id>/<int:year>/<int:month>/', views.SourceChartData_view, name="SourceChartData_view"),
+    path('SourceChartData/<int:act_id>/<int:year>/<int:month>/<int:day>/', views.SourceChartData_view, name="SourceChartData_view"),
+    
+    path('time_duration_chart/<int:act_id>/', views.TimeDurationData_view, name="time_duration_chart"),
+    path('time_duration_chart/<int:act_id>/<int:year>/', views.TimeDurationData_view, name="time_duration_chart"),
+    path('time_duration_chart/<int:act_id>/<int:year>/<int:month>/', views.TimeDurationData_view, name="time_duration_chart"),
+    path('time_duration_chart/<int:act_id>/<int:year>/<int:month>/<int:day>/', views.TimeDurationData_view, name="time_duration_chart"),
+    
+
 
     # #mange Accounts
     path('usr_acc_man/',  views.userAccountManage, name='userAccountManage'),

@@ -29,44 +29,46 @@ class calendar{
             }
         });
         function pop_up_data(calender_dateObj, record){
-    calender_dateObj.classList.add('mark');
-    calender_dateObj.style.position ="relative";
+            calender_dateObj.classList.add('mark');
+            calender_dateObj.style.position ="relative";
 
-    // पहले से मौजूद wrapper check करो
-    let wrapper = calender_dateObj.querySelector(".popup_data_block");
-    if(!wrapper){
-        wrapper = document.createElement('div');
-        wrapper.classList.add("popup_data_block" ,"hidden");
-        calender_dateObj.appendChild(wrapper);
+            // पहले से मौजूद wrapper check करो
+            let wrapper = calender_dateObj.querySelector(".popup_data_block");
+            if(!wrapper){
+                wrapper = document.createElement('div');
+                wrapper.classList.add("popup_data_block" ,"hidden");
+                calender_dateObj.appendChild(wrapper);
 
-        calender_dateObj.addEventListener('mouseover',()=>{
-            wrapper.classList.remove("hidden");
-        });
-        calender_dateObj.addEventListener('mouseout',()=>{
-            wrapper.classList.add("hidden");
-        });
-    }
+                calender_dateObj.addEventListener('mouseover',()=>{
+                    wrapper.classList.remove("hidden");
+                });
+                calender_dateObj.addEventListener('mouseout',()=>{
+                    wrapper.classList.add("hidden");
+                });
+            }
 
-    // हर record के लिए नया item बनाओ
-    const item = document.createElement("div");
-    item.innerHTML = `
-        <div style="color: #ff4d4d;">Start Time: ${record.start_time}</div>
-        <div style="color: #4da6ff;">End Time: ${record.end_time}</div>
-        <div style="color: #33cc33;">Activity Name: ${record.activity_name}</div>
-        <div style="color: #ffcc00;">Source: ${get_only_true(record.source)}</div>
-        <div style="color: #ff66cc;">Trigger: ${get_only_true(record.trigger)}</div>
-        <div style="color: #9966ff;">Extra: ${get_only_true(record.extra)}</div>
-        <hr style="border:0.5px solid #555;">
-    `;
-    wrapper.appendChild(item);
+            // हर record के लिए नया item बनाओ
+            const item = document.createElement("div");
+            // item.style.backgroundColor = record['color'];
+            item.innerHTML = `
+                <div style="color: #33cc33;">Activity Name: ${record.activity_name}</div>
+                <div style="color: #ff4d4d;">Start Time: ${record.start_time}</div>
+                <div style="color: #4da6ff;">End Time: ${record.end_time}</div>
+                <div style="color: #ff66cc;">Trigger: ${get_only_true(record.trigger)}</div>
+                <div style="color: #ffcc00;">Source: ${get_only_true(record.source)}</div>
+                <div style="color: #9966ff;">Extra: ${get_only_true(record.extra)}</div>
+                <hr style="border:0.5px solid #555;">
+            `;
+            wrapper.appendChild(item);
 
-    function get_only_true(obj){
-        return Object.entries(obj)
-            .filter(([_, value]) => value === true)
-            .map(([key]) => key)
-            .join(", ");
-    }
-}
+            function get_only_true(obj){
+                return Object.entries(obj)
+                    .filter(([_, value]) => value === true)
+                    .map(([key]) => key)
+                    .join(", ");
+            }
+        }
+
         function pop_up_data_OLD(calender_dateObj, record){
                 calender_dateObj.classList.add('mark');
                 calender_dateObj.style.position ="relative";
