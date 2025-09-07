@@ -133,49 +133,52 @@ from django.forms.widgets import ColorInput
 
 
 from django.core.exceptions import ValidationError
-import imghdr
+from PIL import Image
 
 class ActivitySchemaForm(forms.ModelForm):
-    color_field = forms.CharField(widget=ColorInput(attrs={ 'value':'#FFFFFF'}))
+    color_field = forms.CharField(widget=ColorInput(attrs={'value':'#FFFFFF'}))
+
     class Meta:
         model = activity_schema
         fields = [
             'usr_id',
-            'activity_name', 
-            'icon', 
-            'color_field', 
-            'source', 
-            'trigger', 
+            'activity_name',
+            'icon',
+            'color_field',
+            'source',
+            'trigger',
             'extra'
         ]
         widgets = {
-            'usr_id' : forms.HiddenInput(),
+            'usr_id': forms.HiddenInput(),
             'activity_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter activity name'}),
-            'source': forms.HiddenInput(),#forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Enter JSON data'}),
-            'trigger': forms.HiddenInput(), #forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Enter JSON data'}),
-            'extra': forms.HiddenInput(),#forms.Textarea(attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Enter JSON data'}),
+            'source': forms.HiddenInput(),
+            'trigger': forms.HiddenInput(),
+            'extra': forms.HiddenInput(),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['extra'].required = False
-    
+
     def clean_icon(self):
         icon = self.cleaned_data.get('icon')
         if not icon:
             return None
+
         if hasattr(icon, 'name'):
-            # SVG check
+            # SVG allow
             if icon.name.lower().endswith('.svg'):
-                return icon  # SVG allow
-            
-            # Normal images check (JPEG, PNG, GIF)
+                return icon
+
+            # Other formats validate
             try:
-                img_type = imghdr.what(icon)
-            except :
-                img_type: None
-            
-            if img_type not in ['jpeg', 'png', 'gif', 'bmp', 'tiff', 'webp']:
-                raise ValidationError("only PNG, JPG, GIF, BMP, TIFF, WebP or SVG images allowed...")
-        
+                img = Image.open(icon)
+                img.verify()  # corrupt image पकड़ेगा
+            except Exception:
+                raise ValidationError("Invalid or corrupted image file.")
+
+            if img.format not in ['JPEG', 'PNG', 'GIF', 'BMP', 'TIFF', 'WEBP']:
+                raise ValidationError("Only PNG, JPG, GIF, BMP, TIFF, WebP or SVG images allowed...")
+
         return icon
