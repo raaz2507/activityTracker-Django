@@ -61,7 +61,7 @@ class userFavrateActivity(models.Model):
     def __str__(self):
         return f"{self.usr_id}- {self.activity_id}"
 
-
+from django.core.exceptions import ValidationError
 class userRecords(models.Model):
     usr_id = models.ForeignKey(
         myuser,
@@ -82,7 +82,20 @@ class userRecords(models.Model):
     source = models.JSONField(null=False, blank=False)
     trigger = models.JSONField(null=False, blank=False)
     extra = models.JSONField(null=False, blank=False, default=dict)
-
+    
+    # --- Database level constraint ---
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                check= models.Q(start_time__lt= models.F('end_time')),
+                name = 'start_time_before_end_time'
+            )
+        ]
+    
+    def clean(self):
+        super().clean()
+        if self.start_time >= self.end_time:
+            raise ValidationError("Start time must be earlier than end time.")
     def __str__(self):
         return f"{self.usr_id}{self.date}- {self.start_time}- {self.end_time} {self.activity_id.activity_name}"
 

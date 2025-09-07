@@ -111,9 +111,15 @@ class userRecordsForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        # activity_instance schema अब view से pass किया जाएगा
-        schema = self.schema
+         # --- Start < End time validation ---
+        start_time = cleaned_data.get("start_time")
+        end_time = cleaned_data.get("end_time")
+        if start_time and end_time and start_time >= end_time:
+            raise forms.ValidationError("Start time must be earlier than end time.")
 
+
+        # --- JSON conversion for source/trigger/extra ---
+        schema = self.schema
         # Convert selected to True/False dict
         cleaned_data['source'] = {k: (k in cleaned_data.get('source', [])) for k in schema.source.keys()}
         cleaned_data['trigger'] = {k: (k in cleaned_data.get('trigger', [])) for k in schema.trigger.keys()}
