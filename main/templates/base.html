@@ -9,7 +9,7 @@
     <!-- Open Graph protocol start-->
     <meta property="og:title" content="Activity Tracker - Track Your Daily Life" />
     <meta property="og:description" content="अपने study, sports, movies और reading जैसी activities को track करें और productivity को analyze करें।" />
-    <meta property="og:image" content="{{ request.build_absolute_uri:'' }}{% static 'img/siteImage.jpg' %}">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/siteImage.jpg' %}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
 
     <meta property="og:type" content="website" />
@@ -18,7 +18,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Activity Tracker - Track Your Daily Life" />
     <meta name="twitter:description" content="Study, sports, movies, और reading सब कुछ track करें और अपनी growth देखें।" />
-    <meta name="twitter:image" content="{{ request.build_absolute_uri:'' }}{% static 'img/siteImage.jpg' %}">
+    <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/siteImage.jpg' %}">
     <!-- Open Graph protocol end-->
 
     <title>{% block title %}{% endblock title %}</title>
