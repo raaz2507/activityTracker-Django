@@ -27,8 +27,11 @@ header {
 header .title_area h1 {
   font-size: 1.8rem;
   font-weight: bold;
+  color: #e9eaff;
 }
-
+header .title_area a{
+  text-decoration: none;
+}
 /* Navigation */
 header nav{
   width:100%;
@@ -64,8 +67,10 @@ header nav ul li a {
 header nav ul li a:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
-
-header .loing_profile{
+header .button_area a{
+  text-decoration: none;
+}
+header .button_area .loing_profile{
   text-align: center;
   padding: 3px 6px;
   

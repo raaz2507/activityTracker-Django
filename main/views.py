@@ -155,22 +155,24 @@ def add_new_activty_view(request):
         print("new form")
         form = ActivitySchemaForm()
     return render(request, "addNewActivity.html",{ "form": form })
+
 @login_required(login_url='login')
 def edit_new_activty_view(request, activityId):
     activity =  get_object_or_404(activity_schema, usr_id = request.user, pk = activityId)
     if request.method == "POST":
         form = ActivitySchemaForm(request.POST, request.FILES, instance= activity)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
             messages.success(request, "Activiy Update sussesfuly")
             return redirect('selectActivity')
         else:
-            messages.error(request, "cant Update activity.")
+            messages.error(request, "⚠️ Activity update failed. Please check the form again.")
             form = ActivitySchemaForm(instance= activity)
 
     else:
         form = ActivitySchemaForm(instance= activity)
     return render(request, "addNewActivity.html",{ "form": form }) 
+
 @login_required(login_url='login')
 def del_new_activty_view(request, activityId):
     obj = get_object_or_404( activity_schema, usr_id = request.user ,pk =  activityId)

@@ -152,6 +152,9 @@ class ActivitySchemaForm(forms.ModelForm):
         widgets = {
             'usr_id': forms.HiddenInput(),
             'activity_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter activity name'}),
+            'icon': forms.ClearableFileInput(attrs={
+                'accept': '.jpg, .jpeg, .png, .gif, .bmp, .tiff, .webp'
+            }),
             'source': forms.HiddenInput(),
             'trigger': forms.HiddenInput(),
             'extra': forms.HiddenInput(),
@@ -178,7 +181,7 @@ class ActivitySchemaForm(forms.ModelForm):
             except Exception:
                 raise ValidationError("Invalid or corrupted image file.")
 
-            if img.format not in ['JPEG', 'PNG', 'GIF', 'BMP', 'TIFF', 'WEBP']:
+            if img.format not in ['JPEG', 'JPG', 'PNG', 'GIF', 'BMP', 'TIFF', 'WEBP']:
                 raise ValidationError("Only PNG, JPG, GIF, BMP, TIFF, WebP or SVG images allowed...")
 
         return icon

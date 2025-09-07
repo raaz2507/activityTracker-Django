@@ -62,23 +62,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function addInputBlock(parent_fild, inputName, value=""){
     const inputContainer =  document.createElement('div');
     inputContainer.classList.add("inputContainer");
@@ -131,29 +114,42 @@ function addInputBlock(parent_fild, inputName, value=""){
 }
 
 
+// imgae preview ke liye 
 
-document.addEventListener("DOMContentLoaded", function(){
-    const input = document.querySelector("#id_icon");
-    const preview = document.querySelector("#icon-preview");
 
-    if(input){
-        // पुरानी image दिखाओ (Django से आई हुई)
-        const oldUrl = preview.dataset.oldurl;
-        if(oldUrl){
-            preview.innerHTML = `<img src="${oldUrl}" alt="Current Icon" style="max-width:100px; max-height:100px; margin:5px;">`;
+document.addEventListener("DOMContentLoaded", ()=>{
+    const aTag = addNewActivtyForm.querySelectorAll('a')[0];
+    aTag.style.display = "none";
+    console.log(aTag);
+    
+    const imgPreviewBox =  document.createElement('div');
+    imgPreviewBox.style.width = "120px";   // preview box size
+    imgPreviewBox.style.height = "120px";
+    imgPreviewBox.style.overflow = "hidden";
+    imgPreviewBox.style.border = "1px solid #ccc";
+    imgPreviewBox.style.borderRadius = "10px";
+    imgPreviewBox.style.marginTop = "10px";
+    
+    const img =  document.createElement("img");
+    img.src = aTag.href;
+    img.style.width = "100%";
+    img.style.height = "100%";
+    img.style.objectFit = "cover";  // 👈 main property
+
+    imgPreviewBox.append(img);
+    aTag.after(imgPreviewBox);
+    const input = document.getElementById("id_icon");
+    input.addEventListener('change', ()=>{
+        // this event show the preview img before uplaad
+        const file = input.files[0];
+        if (file){
+            const reader =  new FileReader();
+            reader.addEventListener('load', (e)=>{
+                img.src = e.target.result;
+            });
+            reader.readAsDataURL(file); // file को base64 में convert करके img src में डाल देगा
         }
+       
+    });
 
-        // नई image preview
-        input.addEventListener("change", function(){
-            preview.innerHTML = "";
-            const file = this.files[0];
-            if(file){
-                const reader = new FileReader();
-                reader.onload = function(e){
-                    preview.innerHTML = `<img src="${e.target.result}" alt="Icon Preview" style="max-width:100px; max-height:100px; margin:5px;">`;
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-    }
 });

@@ -7,6 +7,9 @@ class MainConfig(AppConfig):
     name = 'main'
 
     def ready(self):
+        import main.signals   # 👈 signals register हो जाएँगे
+
+        # 👇 this code for insert dult activiye
         ''' 
         इसका फायदा ये होगा कि हर बार जब आप migrate करेंगे, तो आपका ACTIVITY_SCHEMA dictionary अपने-आप database में load हो जाएगा (duplicate create नहीं होगा, सिर्फ नए add होंगे)।
         '''
