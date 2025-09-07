@@ -9,15 +9,86 @@
 
 {% block content %}
 <main>
-    <section class="about_section">
-        <h2>About Activity Tracker</h2>
-        <!-- <p>
-            Track your daily activities, from study and sports to movies and reading, all in one place. 
-            Visualize your time, analyze productivity, and stay on top of your goals effortlessly.
-        </p> -->
-        <p>Activity Tracker App एक personal productivity और learning logger है। इसमें user अपनी daily activities जैसे पढ़ाई, खेल, फिल्म, गेम, किताब पढ़ना आदि track कर सकता है। App activity का source, reason/trigger, start time, end time और date save करता है।
-            Main features में activity जोड़ना, calendar या list view में देखना, charts/graphs से visualize करना और analytics शामिल हैं। Future में CSV/Excel export।
-        </p>
+    <section class="summary_section">
+        <div class="textContent">
+            <h2>About Activity Tracker</h2>
+            <p>
+                Track your daily activities, from study and sports to movies and reading, all in one place. 
+                Visualize your time, analyze productivity, and stay on top of your goals effortlessly.
+            </p>
+            <p>
+                Life is made of moments ✨ – whether it’s studying, working out, or just relaxing with a movie.  
+                With Activity Tracker, you can capture every moment, measure your growth, and stay motivated to reach your goals.
+            </p>
+            <a href="{% url 'selectActivity' %}">
+                <button type="button">🚀 Start Your Journey Now</button>
+            </a>
+            
+        </div>
+        <div class="imgBox">
+            <img src="{% static 'img/people_with_clock_checklist_and_target.svg' %}" alt="basic img">
+        </div>
+        
+        
+    </section>
+    
+    <section class="highlight_section">
+        <h2>Why You’ll Love It ❤️</h2>
+        <div class="card_area">
+            <div class="card">
+                <div class="iconContaner">
+                    🎯
+                </div>
+                <span class="details">
+                    Stay focused – track time spent on study, gym, hobbies, or anything you love.
+            </div>
+            <div class="card">
+                <div class="iconContaner">
+                    📅
+                </div>
+                <span class="details">
+                    Your life, your calendar 🗓️ – see all your activities beautifully organized.
+                </span>
+            </div>
+            <div class="card">
+                <div class="iconContaner">
+                    📈
+                </div>
+                <span class="details">
+                    Watch your progress rise 📊 – analyze with smart charts & insights.
+                </span>
+            </div>
+        </div>
+    </section>
+    
+    <section class="howTo_section">
+        <h2>How To use ❓</h2>
+        <div class="card_area">
+            <div class="card">
+                <div class="iconContaner">
+                    ❶
+                </div>
+                <span class="details">
+                    Add or Create your first activity 💡 (study, gym, movie… it’s up to you!).
+                </span>
+            </div>
+            <div class="card">
+                <div class="iconContaner">
+                    ❷
+                </div>
+                <span class="details">
+                    Add details ⏰ – when, how, and why you did it.
+                </span>
+            </div>
+            <div class="card">
+                <div class="iconContaner">
+                    ❸
+                </div>
+                <span class="details">
+                Celebrate your wins 🏆 – check them on calendar & colorful charts.
+                </span>
+            </div>
+        </div>
     </section>
 
 </main>

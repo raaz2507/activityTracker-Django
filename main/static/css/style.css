@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 /* @import url('./colorProfile.css'); */
 
 body, html{
@@ -40,7 +41,8 @@ main{
     position:relative;
     z-index: 1;
     width:90vw;
-    margin:0 auto;
+    margin:1rem auto;
+    padding-top: 1rem;
 }
 body header{
     align-self: flex-start;

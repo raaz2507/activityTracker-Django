@@ -1,0 +1,43 @@
+{% load static %}
+<div class="activity_card " style="background-color: {{ activity.color_field }};" data-activity_id="{{ forloop.counter }}" data-form_url="{% url 'addRecord' activity.id %}">
+    <!-- userDefine_activity_card -->
+    <div class="activity_card_header">
+        <div class="activity_icon">
+            <img src="{{ activity.icon.url }}" alt="icon">
+        </div>
+        <h1 class="heading">{{activity.activity_name}}</h1>
+        <div class="favBtn" data-activity_id="{{ activity.id }}">
+            {% if activity.id in favrateActivitys %}
+                <img src="{% static 'img/star-full.svg' %}" alt="fav">
+            {% else %}
+                <img src="{% static 'img/star-empty.svg' %}" alt="fav">
+            {% endif %}
+        </div>
+    </div> 
+    <ul class="triger" >
+        <h3 class="title">Triger/Cose</h3>
+        {% for cose in activity.trigger %}
+            <li>{{ cose }},</li>
+        {% endfor %}
+    </ul>
+    
+    <ul class="source">
+        <h3 class="title">Source/Action</h3>
+        {% for cose in activity.source %}
+        <li>{{ cose }},</li>
+        {% endfor %}
+    </ul>
+    {% if activity.usr_id %}
+        <div class="cardFooter">
+            <a href="{% url 'edit_new_activty' activity.id %}" >
+                <button type="button" class="btn editActiviyBtn">Edit</button>
+            </a>
+                <form action="{% url 'del_new_activty' activity.id %}" method="post" class="btn delBtnForm" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" onclick="return confirm('Are you sure to delete this activity?')">
+                    Delete
+                </button>
+            </form>
+        </div>
+    {% endif %}
+</div>

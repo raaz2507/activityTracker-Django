@@ -81,31 +81,13 @@ def change_user_profile(request, user_id):
 # record related functions
 
 from .models import activity_schema, userFavrateActivity
+from django.db.models import Q
 
 @login_required( login_url = 'login')
 def selectActivity_view(request):
-    pre_activites =  activity_schema.objects.filter(usr_id=None)
-    favrateActivitysList =  list(userFavrateActivity.objects.filter(usr_id= request.user).values_list('activity_id', flat=True))
-    userDefineActiviyAll =  activity_schema.objects.filter(usr_id= request.user)
-    
-    activites=[]
-    favrateActivitys =[]
-    for act in pre_activites:
-        if act.id in favrateActivitysList:
-            favrateActivitys.append(act)
-        else:
-            activites.append(act)
-
-    userDefineActiviy =[]
-    for act in userDefineActiviyAll:
-        if act.id in favrateActivitysList:
-            favrateActivitys.append(act)
-        else:
-            userDefineActiviy.append(act)
-    print(userDefineActiviy)
-    # print(favrateActivitys)
-    # print(activites)
-    return render(request, 'selectActivity.html', {'all_activities':activites, 'userDefineActiviy': userDefineActiviy, 'favrateActivitys':favrateActivitys})
+    all_activites =  activity_schema.objects.filter(Q(usr_id=None) | Q(usr_id= request.user))
+    favrateActivitys =  list(userFavrateActivity.objects.filter(usr_id= request.user).values_list('activity_id', flat=True))
+    return render(request, 'selectActivity.html', {'all_activities':all_activites,  'favrateActivitys':favrateActivitys})
 
 # activites_slugify_map={ slugify(activite.activity_name): activite.activity_name for activite in activity_schema.objects.all()}
 
@@ -302,6 +284,7 @@ def getuserActiviyList(request):
 
 # 🔹 Common helper for filtering by period
 def filter_by_period(qs, year, month, day):
+    print(year, month, day)
     if year and month and day:
         # Exact day filter
         qs = qs.filter(date__year=year, date__month=month, date__day=day)
@@ -353,20 +336,42 @@ def get_activity_summary(request, act_id, field, year, month, day):
 
 
 # -------- Views -----------
+@login_required(login_url='login')
 def TriggerChartData_view(request, act_id, year=None, month=None, day=None):
     data = get_activity_summary(request, act_id, "trigger", year, month, day)
     return JsonResponse(data)
 
-
+@login_required(login_url='login')
 def SourceChartData_view(request, act_id, year=None, month=None, day=None):
     data = get_activity_summary(request, act_id, "source", year, month, day)
     return JsonResponse(data)
 
 from  datetime import datetime, date, time
+import calendar
+@login_required(login_url='login')
 def TimeDurationData_view(request, act_id, year=None, month=None, day=None):
     today = date.today()
     qs = userRecords.objects.filter(usr_id=request.user,activity_id=act_id).values('date', 'start_time', 'end_time')
 
+    # Total minutas calculation 
+    total_minutes_in_period=0
+    if year and month and day:
+        total_minutes_in_period =  24*60
+    elif year and month:
+        days_in_month = calendar.monthrange(year, month)[1]  # सही number of days देगा
+        total_minutes_in_period = 24 * 60 * days_in_month
+    elif year:
+        days_in_year = 366 if calendar.isleap(year) else 365 #leep year ka day count
+        total_minutes_in_period = 24 * 60 * days_in_year
+    else:
+        if qs.exists():
+            first_date = qs.order_by('date').first()['date'] # सबसे पहली date
+            day_count = (today - first_date).days +1 # +1 ताकि first day भी count हो
+            total_minutes_in_period = 24 * 60 * day_count
+        else:
+            total_minutes_in_period = 0
+
+    
     qs = filter_by_period(qs, year, month, day)
     # "all" में कोई filter नहीं
     records =qs.values('start_time', 'end_time' )
@@ -383,8 +388,60 @@ def TimeDurationData_view(request, act_id, year=None, month=None, day=None):
             duration = datetime.combine(today, end_time) - datetime.combine(today, start_time)
             duration_minutes = duration.total_seconds() / 60
             total_duration_minutes += duration_minutes
-        
-    return JsonResponse({'total_duration_minutes': total_duration_minutes})
+    data ={
+        'Total Duration Minutes': total_duration_minutes,
+        'Total Minutes in Period': total_minutes_in_period
+    }  
+    return JsonResponse(data)
+
+
+@login_required(login_url='login')
+def calendar_view(request):
+    return render(request, 'calendar.html')
+    
+from django.db.models import F
+@login_required(login_url='login')
+def get_calandar_data(request, year):
+    user_records={}
+    if isinstance(year, int):
+        user_records = userRecords.objects.filter(
+                usr_id= request.user, 
+                date__year= year
+            ).annotate(
+                activity_name =F("activity_id__activity_name"),
+                color=F("activity_id__color_field"),
+            ).values(
+                'activity_name', 'color', 'date', 'start_time', 'end_time', 'source', 'trigger', 'extra',
+            )
+        print(list(user_records))
+        return JsonResponse(list(user_records), safe=False)
+    
+    return JsonResponse({'error': "invalid year"}, status= 400)
+
+
+from django.http import JsonResponse
+def userAccountManage(request, user_id=None, del_user_id=None):
+    # print(user_id, del_user_id)
+    if del_user_id:
+        user = get_object_or_404(myuser, usr_id = del_user_id)
+        # user.delete()
+        userAccData = list(myuser.objects.all().values('id','user_name', 'gender', 'age', 'pwd' ))
+        return JsonResponse({'userAccData':userAccData, 'messages':{'tag':"sussess", 'msg':f"{del_user_id} data Sussefuy Deleted..."}}, safe=False)
+    if user_id:
+        userData = list(userRecords.objects.filter(usr_id=user_id).values('id', 'usr_id__username', 'activity_name', 'date', 'start_time', 'end_time', 'source', 'trigger'))
+        # userData = list(userRecords.objects.filter(usr_id__id=user_id).values( 'usr_id','date', 'start_time', 'end_time', 'activity_name', 'trigger', 'source', 'extra'))
+        # print(userData)
+        return JsonResponse(userData, safe=False);
+    else:
+        all_users = myuser.objects.all()
+        print(all_users)
+        return render(request, 'userAccountManage.html', {'all_users': all_users})
+
+# def userAccountManageDeleteUsr(request, user_id):
+#     user = get_object_or_404(Users, usr_id=user_id);
+#     user.delete();
+
+
 
 # def chartData_view_old(request, period="all"):
 #     # Step 1: सब activity_ids लें
@@ -451,30 +508,6 @@ def TimeDurationData_view(request, act_id, year=None, month=None, day=None):
 #     return JsonResponse( {'chart_data' : activity_summary})
 
 
-@login_required(login_url='login')
-def calendar_view(request):
-    return render(request, 'calendar.html')
-    
-from django.db.models import F
-@login_required(login_url='login')
-def get_calandar_data(request, year):
-    user_records={}
-    if isinstance(year, int):
-        user_records = userRecords.objects.filter(
-                usr_id= request.user, 
-                date__year= year
-            ).annotate(
-                activity_name =F("activity_id__activity_name"),
-                color=F("activity_id__color_field"),
-            ).values(
-                'activity_name', 'color', 'date', 'start_time', 'end_time', 'source', 'trigger', 'extra',
-            )
-        print(list(user_records))
-        return JsonResponse(list(user_records), safe=False)
-    
-    return JsonResponse({'error': "invalid year"}, status= 400)
-
-
 
 # from datetime import datetime
 # import calendar ,json
@@ -532,26 +565,3 @@ def get_calandar_data(request, year):
 #         'months_json': months_json_data, 
 #         'user': request.user,
 #     })
-
-
-from django.http import JsonResponse
-def userAccountManage(request, user_id=None, del_user_id=None):
-    # print(user_id, del_user_id)
-    if del_user_id:
-        user = get_object_or_404(myuser, usr_id = del_user_id)
-        # user.delete()
-        userAccData = list(myuser.objects.all().values('id','user_name', 'gender', 'age', 'pwd' ))
-        return JsonResponse({'userAccData':userAccData, 'messages':{'tag':"sussess", 'msg':f"{del_user_id} data Sussefuy Deleted..."}}, safe=False)
-    if user_id:
-        userData = list(userRecords.objects.filter(usr_id=user_id).values('id', 'usr_id__username', 'activity_name', 'date', 'start_time', 'end_time', 'source', 'trigger'))
-        # userData = list(userRecords.objects.filter(usr_id__id=user_id).values( 'usr_id','date', 'start_time', 'end_time', 'activity_name', 'trigger', 'source', 'extra'))
-        # print(userData)
-        return JsonResponse(userData, safe=False);
-    else:
-        all_users = myuser.objects.all()
-        print(all_users)
-        return render(request, 'userAccountManage.html', {'all_users': all_users})
-
-# def userAccountManageDeleteUsr(request, user_id):
-#     user = get_object_or_404(Users, usr_id=user_id);
-#     user.delete();

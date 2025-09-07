@@ -11,14 +11,14 @@ class myChartDashbod{
     #charTypeChoice ={};
 
     constructor(){
-        this.#getElemets();
-        this.#defultChartState();
-        this.#cretaeChartTypeSelector();
+        this.#getElements();
+        this.#defaultChartState();
+        this.#createChartTypeSelector();
         this.#setEvent();
         this.#printFirstChart(); // पहला चार्ट auto select
     }
     
-    #getElemets(){
+    #getElements(){
         const ids = {
             TriggerCanvas: 'TriggersChart',
             SourceCanvas: 'SourceChart',
@@ -58,7 +58,7 @@ class myChartDashbod{
         
 
     }
-    #cretaeChartTypeSelector(){
+    #createChartTypeSelector(){
         const { TriggerChartChoice, SourceChartChoice, TimeDurationChartChoice } = this.#charTypeChoice;
 
         const radioBtnList = ["bar", "line", "pie", "doughnut", "radar", "polarArea", "bubble", "scatter"];
@@ -97,13 +97,13 @@ class myChartDashbod{
             if (li){ this.#highlightChartAndLoad(li);}
         });
 
-
+        /* Duration (day, month, yera, all ) seletor events */ 
         const {TriggersDurationSelector, SourceDurationSelector, TimeChartDurationSelector}=this.#DurationSelector;
         TriggersDurationSelector.addEventListener('click', (event)=>{
             const button = event.target;
             if ( button.tagName === "BUTTON"){
                 this.#chartsState.triggerChart.period.limit = button.dataset.period;
-                this.#refreshTriggerChart("full");
+                this.#refreshTriggerChart(true);
                 setClass_selectedDuration(button);
             }
             
@@ -113,7 +113,7 @@ class myChartDashbod{
             const button = event.target;
             if ( button.tagName === "BUTTON"){
                 this.#chartsState.sourceChart.period.limit = button.dataset.period;
-                this.#refreshSourceChart("full");
+                this.#refreshSourceChart(true);
                 setClass_selectedDuration(button);
             }
             
@@ -122,7 +122,7 @@ class myChartDashbod{
             const button = event.target;
             if ( button.tagName === "BUTTON"){
                 this.#chartsState.timeDurationChart.period.limit = button.dataset.period;
-                this.#refreshTimeDurationChart("full");
+                this.#refreshTimeDurationChart(true);
                 setClass_selectedDuration(button);
             }
             
@@ -136,7 +136,7 @@ class myChartDashbod{
             button.classList.add("selected-duration");
         }
 
-
+        /* Chart type selector releted events */ 
         const { TriggerChartChoice, SourceChartChoice, TimeDurationChartChoice } = this.#charTypeChoice;
         TriggerChartChoice.addEventListener('change', (event)=>{
             const target = event.target;
@@ -164,29 +164,31 @@ class myChartDashbod{
             }
         });
 
+        /* time period selctor calander releted events */ 
         const {Dateset4TriggersDuration, Dateset4SourceDuration, Dateset4TimeChartDuration}= this.#dateSelector;
-        const {triggerChart, sourceChart, timeDurationChart} = this.#chartsState;
-        /* set  vlaue to chart State Object*/
-        setDate2chartsStateObj(sourceChart.period.date, Dateset4TriggersDuration);
-        setDate2chartsStateObj(triggerChart.period.date, Dateset4SourceDuration);
-        setDate2chartsStateObj(timeDurationChart.period.date, Dateset4TimeChartDuration);
+        // const {triggerChart, sourceChart, timeDurationChart} = this.#chartsState;
         
-        function setDate2chartsStateObj( DateObj, dateInput){
-            const date = dateInput.value.split('-');
-            DateObj.year = date[0];
-            DateObj.month = date[1];
-            DateObj.day = date[2];
-        }
-        console.log(this.#chartsState);
+        
         Dateset4TriggersDuration.addEventListener('change', ()=>{
-            setDate2chartsStateObj(triggerChart.period.date, Dateset4TriggersDuration);
+            this.#setDate2chartsStateObj(this.#chartsState.triggerChart.period.date, Dateset4TriggersDuration);
+            this.#refreshTriggerChart(true);
         });
         Dateset4SourceDuration.addEventListener('change', ()=>{
-            setDate2chartsStateObj(sourceChart.period.date, Dateset4SourceDuration);
+            this.#setDate2chartsStateObj(this.#chartsState.sourceChart.period.date, Dateset4SourceDuration);
+            this.#refreshSourceChart(true);
         });
         Dateset4TimeChartDuration.addEventListener('change', ()=>{
-            setDate2chartsStateObj(timeDurationChart.period.date, Dateset4TimeChartDuration);
+            this.#setDate2chartsStateObj(this.#chartsState.timeDurationChart.period.date, Dateset4TimeChartDuration);
+            this.#refreshTimeDurationChart(true);
         });
+    }
+    #setDate2chartsStateObj( DateObj, dateInput){
+        const date = dateInput.value.split('-');
+        // console.log(date);
+        DateObj.year = date[0];
+        DateObj.month = date[1];
+        DateObj.day = date[2];
+        // console.log(this.#chartsState);
     }
 
     #printFirstChart(){
@@ -204,14 +206,14 @@ class myChartDashbod{
         li.classList.add('selected');
         // const chartId = li.dataset.activity_id;
         
-        this.#defultChartState();
+        this.#defaultChartState();
         this.#chartsState.chartId = li.dataset.activity_id; 
         //creating charts 
-        this.#refreshTriggerChart("full");
-        this.#refreshSourceChart( "full" );
-        this.#refreshTimeDurationChart("full");
+        this.#refreshTriggerChart(true);
+        this.#refreshSourceChart( true );
+        this.#refreshTimeDurationChart(true);
     }
-    #defultChartState(){
+    #defaultChartState(){
         this.#chartsState = {}
         this.#chartsState ={
             chartId : "",
@@ -252,8 +254,14 @@ class myChartDashbod{
                 ChartData: {},
             },
         }
+        const {Dateset4TriggersDuration, Dateset4SourceDuration, Dateset4TimeChartDuration}= this.#dateSelector;
+        const {triggerChart, sourceChart, timeDurationChart} = this.#chartsState;
+        /* set  vlaue to chart State Object*/
+        this.#setDate2chartsStateObj(triggerChart.period.date, Dateset4TriggersDuration);
+        this.#setDate2chartsStateObj(sourceChart.period.date, Dateset4SourceDuration);
+        this.#setDate2chartsStateObj(timeDurationChart.period.date, Dateset4TimeChartDuration);
     }
-    async #fecthDataformServer(prefix, period){
+    async #fetchDataFromServer(prefix, period){
         const {chartId} = this.#chartsState;
         const {limit, date} = period;
 
@@ -272,13 +280,13 @@ class myChartDashbod{
     }
     async #getSourceChartData(){
         const {period} =  this.#chartsState.sourceChart;
-        const data = await this.#fecthDataformServer('SourceChartData', period);
+        const data = await this.#fetchDataFromServer('SourceChartData', period);
          // console.log(data);
         return data;
     }
     async #getTriggerChartData(){
         const {period} =  this.#chartsState.triggerChart;
-        const data = await this.#fecthDataformServer('TriggerChartData', period);
+        const data = await this.#fetchDataFromServer('TriggerChartData', period);
          // console.log(data);
         return data;
     }
@@ -286,12 +294,12 @@ class myChartDashbod{
     async #getTimeDurationChartData(){
 
         const {period} =  this.#chartsState.timeDurationChart;
-        const data = await this.#fecthDataformServer('time_duration_chart', period);
+        const data = await this.#fetchDataFromServer('time_duration_chart', period);
         return data;
     }
 
-    async #refreshTriggerChart(refreshType=""){
-        if (refreshType.toLowerCase() === "full"){
+    async #refreshTriggerChart(fullRefresh = false){
+        if (fullRefresh){
            this.#chartsState.triggerChart.ChartData = await this.#getTriggerChartData();
         }
         if (!this.#chartsState.triggerChart.ChartData){
@@ -311,8 +319,8 @@ class myChartDashbod{
             ChartData );
     }
 
-    async #refreshSourceChart(refreshType="" ){
-        if (refreshType.toLowerCase() === "full"){
+    async #refreshSourceChart(fullRefresh = false ){
+        if (fullRefresh){
            this.#chartsState.sourceChart.ChartData = await this.#getSourceChartData();;
         }
         if (!this.#chartsState.sourceChart.ChartData){
@@ -332,35 +340,17 @@ class myChartDashbod{
             ChartData );
     }
 
-    async #refreshTimeDurationChart(refreshType=""){
+    async #refreshTimeDurationChart(fullRefresh = false){
         // this statemet consider get data form server or not
-        if (refreshType.toLowerCase() === "full"){
+        if (fullRefresh){
            this.#chartsState.timeDurationChart.ChartData = await this.#getTimeDurationChartData();
         }
         if (!this.#chartsState.timeDurationChart.ChartData){
             this.#chartsState.timeDurationChart.ChartData = await this.#getTimeDurationChartData();
         }
 
-        const ChartData = this.#chartsState.timeDurationChart.ChartData;
+        let ChartData = this.#chartsState.timeDurationChart.ChartData;
         
-        
-        // Totla minutas calculation 
-        let totoalMinutInDay = 0;
-        if (this.#chartsState.timeDurationChart.period.limit == 'year' ){
-            totoalMinutInDay = 60*24*365;
-        }else if(this.#chartsState.timeDurationChart.period.limit === 'month'){
-            // इस महीने के last day का पता
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = today.getMonth(); // 0 से 11 तक (0=January)
-            const lastDayOfMonth = new Date(year, month + 1, 0).getDate();
-            totoalMinutInDay = 60*24*lastDayOfMonth;
-        }
-        else if(this.#chartsState.timeDurationChart.period.limit === 'day'|| this.#chartsState.timeDurationChart.period.limit == 'all'){
-            totoalMinutInDay = 60*24;
-        }
-        
-        ChartData['totoalMinutsInDay'] = totoalMinutInDay;
         console.log(ChartData);
         
         if (this.#charts['timeDuractionChart']) {
@@ -379,14 +369,16 @@ class myChartDashbod{
 
     #createBarChart(canvas, chartLabel, ChartType, ChartData  ){
         // console.log(ChartData);
+        const labels = Object.entries(ChartData).map(([key, value]) => `${key}: ${value}`);
+        const values = Object.values(ChartData);
         const ctx = canvas.getContext('2d');
         const chatObj = new Chart(ctx, {
             type: ChartType,
             data: {
-            labels: Object.keys(ChartData),
+            labels: labels,
             datasets: [{
                 label: chartLabel,  
-                data: Object.values(ChartData),
+                data: values,
                 backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(255, 159, 64, 0.2)',

@@ -1,44 +1,252 @@
-main{
-    width: 90%;
-    margin: 0 auto;
-    /* border: 1px solid red; */
-    padding: 1rem;
+/* Common styles */
+/* section {
+    padding: 3rem 2rem;
+    text-align: center;
 }
- main .about_section{
-    width:70%;
-    border: 1px solid gray;
+
+h1, h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+p {
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    color: #555;
+    line-height: 1.6;
+} */
+
+/* 🔹 Summary Section */
+main {
+    background: 
+        linear-gradient(000deg, rgba(255, 000, 000, 0.3), transparent 50%),
+        linear-gradient(051deg, rgba(255, 166, 000, 0.3), transparent 50%), 
+        linear-gradient(102deg, rgba(255, 255, 000, 0.3), transparent 50%), 
+        linear-gradient(153deg, rgba(000, 255, 000, 0.3), transparent 50%),  
+        linear-gradient(204deg, rgba(000, 000, 255, 0.3), transparent 50%),   
+        linear-gradient(255deg, rgba(076, 000, 130, 0.3), transparent 50%),  
+        linear-gradient(306deg, rgba(238, 130, 238, 0.3), transparent 50%);
+    background-color: #ffffff99;
+    margin: 1rem auto;
+    border-radius: 10px;
+    padding-bottom: 2rem;
+}
+main .summary_section {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* responsive ke liye */
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 4rem 8%;
+    margin: 1rem 3rem;
+    background: linear-gradient(135deg, rgb(253, 251, 251) 0%, rgb(187, 226, 246) 100%);
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    
+}
+
+/* Text part */
+.summary_section .textContent {
+    /* flex: 1 1 500px; */
+    /* flex-grow: 1; */
+    max-width: 600px;
+    max-width: 600px !important;
+}
+
+.summary_section .textContent h2 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.summary_section .textContent p {
+    padding: 0 1rem;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 1rem;
+    text-align: justify;
+    font-family: "Comic Sans MS", cursive, sans-serif;;
+}
+
+main .summary_section .textContent button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    animation: pulse 2s infinite;
+}
+/* Hover effect: thoda bada + shadow */
+main .summary_section .textContent button:hover {
+    background: #45a049;
+    transform: scale(1.07);
+    box-shadow: 0 0 20px rgba(72, 239, 128, 0.6);
+}
+
+/* Click effect: thoda chhota ho jaye */
+main .summary_section .textContent button:active {
+    transform: scale(0.95);
+}
+
+/* Image box */
+main .summary_section .imgBox {
+    min-width: 200px;
+    flex-grow: 1;
+    max-width: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.summary_section .imgBox img {
+    width: 100%;
+    /* max-width: 450px; */
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    animation: floatImg 4s ease-in-out infinite;
+}
+
+/* Floating animation for image */
+@keyframes floatImg {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(72, 239, 128, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(72, 239, 128, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(72, 239, 128, 0); }
+}
+/* Responsive */
+@media (max-width: 900px) {
+    .summary_section {
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    .summary_section .textContent h2 {
+        font-size: 2rem;
+    }
+
+    .summary_section .imgBox img {
+        /* max-width: 320px; */
+    }
+}
+
+
+/* 🔹 Highlight Section */
+.highlight_section {
+    margin: 4rem 8%;
+    padding: 2rem 2rem;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #4e46e527;
+}
+.highlight_section h2{
+    margin-bottom: 1rem;
+    color: #30567b;
+    font-weight: 600;
+}
+.highlight_section .card_area{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.highlight_section .card_area .card {
+    flex: 1 1 20rem;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-transform: capitalize;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.highlight_section .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.highlight_section .iconContaner {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.highlight_section .details {
+    color: #444;
+    font-size: 0.95rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 🔹 How To Section */
+/* .howTo_section *{ border: 1px solid red;} */
+.howTo_section {
+    width:90%;
+    background: rgba(249, 250, 251, 0.4);
+    border-radius: 16px;
+    text-align: center;
+    margin: 0rem auto;
+    padding: 1rem 0; 
+}
+.howTo_section h2{
+    margin: 1rem;
+    color: #30567b;
+    font-weight: 600;
+}
+.howTo_section .card_area{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 0 2rem;
+}
+
+.howTo_section .card_area .card {
+    flex: 1 0 15rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
+    background: rgba(255, 255, 255, 0.561);
     border-radius: 10px;
     padding: 1rem;
-    text-align: justify;
-    /* background-color: rgba(128, 128, 128, 0.4); */
+    margin: 1rem auto;
+    max-width: 600px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: background 0.3s ease;
 }
-/*
-.about_section ol {
-    padding-left: 2rem;
+
+.howTo_section .card:hover {
+    background: #f3f4f6;
 }
-.about_section h2{
-    color:bisque;
-} */
-main .about_section {
-    /* max-width: 700px; */
-    /* margin: 50px auto; */
-    text-align: justify;
-    padding: 25px 20px;
-    background: rgba(247, 249, 252, 0.8);
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+.howTo_section .iconContaner {
+    font-size: 1.5rem;
+    background: #4f46e5;
+    color: #fff;
+    border-radius: 50%;
+    padding: 0.6rem 1rem;
+    font-weight: bold;
+    margin: 1rem;
+}
+
+.howTo_section .details {
     color: #333;
-}
-
-main .about_section h2 {
-    font-size: 1.8rem;
-    color: #2c3e50;
-    margin-bottom: 15px;
-}
-
-main .about_section p {
-    font-size: 1.05rem;
-    color: #555;
-    /* line-height: 1.5; */
+    font-size: 1rem;
+    flex: 1;
+    text-align: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
 }

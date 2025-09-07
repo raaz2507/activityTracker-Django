@@ -2,10 +2,25 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+
+    <!-- Open Graph protocol start-->
+    <meta property="og:title" content="Activity Tracker - Track Your Daily Life" />
+    <meta property="og:description" content="अपने study, sports, movies और reading जैसी activities को track करें और productivity को analyze करें।" />
+    <meta property="og:image" content="{% static 'img/people_with_clock_checklist_and_target.svg' %}" />
+    <meta property="og:url" content="https://activitytracker-django.onrender.com/" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Activity Tracker - Track Your Daily Life" />
+    <meta name="twitter:description" content="Study, sports, movies, और reading सब कुछ track करें और अपनी growth देखें।" />
+    <meta name="twitter:image" content="{% static 'img/people_with_clock_checklist_and_target.svg' %}" />
+    <!-- Open Graph protocol end-->
+
     <title>{% block title %}{% endblock title %}</title>
     <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"> -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">

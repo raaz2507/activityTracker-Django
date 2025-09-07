@@ -1,5 +1,5 @@
 :root{
-    --bg_color : white;
+    --bg_color : rgba(255, 255, 255, 0.5);
     --curve_color: hsla(0, 0%, 94%, 0.7);
     --li-height :2rem;
 }
@@ -7,16 +7,21 @@
 /* main *{ border: 1px solid red;} */
 main{
     margin-top: 1rem;
+    padding: 1rem auto;
+    border-radius: 10px;
+    /* overflow: hidden; */
 }
 
 main aside{
     background-color: rgba(135, 207, 235, 0.8);
+    border-radius: 10px;
 
 }
 main aside .toggle_nav{
     width: 2.5rem;
     height: 2.5rem;
     margin: 1rem;
+
 }
 main aside .toggle_nav svg,
 main aside .toggle_nav img{
@@ -87,6 +92,7 @@ main aside nav ul li a .chart_name{
 
 /* chart scetion start */
 main .charts_section {
+    border-radius: 10px;
     background-color: var(--bg_color);
     padding: 1rem 1rem;
 }
@@ -96,7 +102,8 @@ main .charts_section .chart_container{
     overflow: hidden;
     background-color: rgba(250, 235, 215, 0.911); 
     border-radius: 10px;
-    width: 500px;
+    width: 450px;
+    max-width: 550px;
     height: auto;
 }
 main .charts_section .chart_container .chart_display{
@@ -150,7 +157,7 @@ main .charts_section .chart_container .duration_selector input[type="date"] {
 main .charts_section .chart_container .duration_selector button {
     padding: 6px 12px;
     border: 1px solid #ccc;
-    background-color: #fff;
+    background-color: #ffffff76;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
