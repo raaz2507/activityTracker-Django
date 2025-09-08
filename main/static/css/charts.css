@@ -216,3 +216,23 @@ main .charts_section .chart_container .duration_selector{
 }
 /* flex setting end */
 
+@media only screen and (orientation: portrait){
+    main{
+        flex-direction: column;
+    }
+    main aside nav ul{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    main aside nav ul li{
+        padding: 10px 15px;
+        border-radius: 20px;
+    }
+    main aside nav ul li::before{
+        display: none;
+    }
+    main aside nav ul li::after{
+        display: none;
+    }
+}

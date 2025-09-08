@@ -45,10 +45,12 @@ class addNewActivityDashbord{
 
         const {addNewActivtyForm} = this.#elemtns;
 
-        addNewActivtyForm.addEventListener("submit", ()=>{
-            sourceInput = document.getElementById('id_source');
-            triggerInput = document.getElementById('id_trigger');
-            extraInput = document.getElementById('id_extra');
+        addNewActivtyForm.addEventListener("submit", (event)=>{
+            event.preventDefault();
+
+            const sourceInput = document.getElementById('id_source');
+            const triggerInput = document.getElementById('id_trigger');
+            const extraInput = document.getElementById('id_extra');
 
             function collectFieldData(filed){
                 const inputs = filed.querySelectorAll('input[type="text"]');
@@ -67,9 +69,13 @@ class addNewActivityDashbord{
             sourceInput.value = JSON.stringify(collectFieldData(source_filds));
             triggerInput.value = JSON.stringify(collectFieldData(triger_filds));
             extraInput.value = JSON.stringify(collectFieldData(extra_filds));
+
+            // अब form को दुबारा submit करना
+            addNewActivtyForm.submit();
         });
     }
     #genreateSourceNTriggerFild(){
+        const {source_filds, triger_filds, extra_filds} = this.#elemtns;
         // Convert JSON string from hidden inputs to object
         const sourceData = JSON.parse(document.getElementById('id_source').value || "{}");
         const triggerData = JSON.parse(document.getElementById('id_trigger').value || "{}");
@@ -119,6 +125,7 @@ class addNewActivityDashbord{
     }
     
     #addInputBlock(parent_fild, inputName, value=""){
+        
         const inputContainer =  document.createElement('div');
         inputContainer.classList.add("inputContainer");
         

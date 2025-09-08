@@ -1,5 +1,5 @@
 staticfiles/
 tree.txt
 db.sqlite3
-
+media/Activity_icons/userDefined/
 databaseExample.json

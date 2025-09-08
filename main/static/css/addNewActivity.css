@@ -1,10 +1,10 @@
 main form {
-    width: 40rem;
+    max-width: 40rem;
     margin: 2rem auto;
     background-color: #87cfebb3;
     /* border: 2px solid red; */
     border-radius: 10px;
-    padding: 1rem 2rem;
+    padding: 1rem 16px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     font-family: Arial, sans-serif;
 }
@@ -13,7 +13,7 @@ main form {
 form fieldset {
     border: 1px solid rgb(204, 204, 204);
     background-color: rgba(255, 255, 255, 0.5);
-    padding: 1rem 2rem;
+    padding: 10px 13px 5px 13px;
     border-radius: 10px;
     margin-top: 1rem;
     display: flex;
@@ -70,7 +70,8 @@ form p:has(input[type="file"]) label{
 /* Button styling */
 form button[type="submit"] {
     margin-top: 1rem;
-    margin-left: 80%;
+    margin-left: 75%;
+    margin-right: 13px;
     padding: 0.7rem 1.5rem;
     font-size: 1.1rem;
     background-color: #62a0ea;
