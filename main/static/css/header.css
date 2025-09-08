@@ -138,7 +138,7 @@ header .button_area{
   justify-content: space-evenly;
   gap:1rem 2rem;
 }
-nav ul{
+header nav ul{
   display: flex;
   flex-wrap: wrap;
   align-items: center;

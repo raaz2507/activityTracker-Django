@@ -1,0 +1,201 @@
+:root{
+    --bg_color : rgb(255, 248, 248);
+    --curve_color: hsla(0, 0%, 94%, 0.7);
+    --li-height : 40px;
+}
+
+/* main *{ border: 1px solid red;} */
+main{
+    margin-top: 1rem;
+    padding: 1rem auto;
+    border-radius: 10px;
+    /* overflow: hidden; */
+}
+
+main aside{
+    background-color: rgba(135, 207, 235, 0.8);
+    border-radius: 10px;
+
+}
+main aside .toggle_nav{
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 1rem;
+
+}
+main aside .toggle_nav svg,
+main aside .toggle_nav img{
+    width:100%;
+    height:auto;
+}
+
+main aside nav{
+    padding: 0;
+    margin-left: 1rem;
+}
+main aside nav ul{
+    list-style: none;
+}
+main aside nav ul li{
+    width: 13rem;
+    padding: 10px 0;
+    border-top-left-radius: var(--li-height);
+    border-bottom-left-radius: var( --li-height);
+    position: relative;
+    box-shadow: -6px 6px 8px -7px rgba(0, 0, 0, 0.586);
+}
+
+main aside nav ul li.selected{
+    background-color: var(--bg_color) !important;
+}
+main aside nav ul li a{
+    
+    text-decoration: none;
+    margin-left: 1rem;
+}
+
+
+main aside nav ul li a .icon_box{
+    width: 2rem;
+    height: 2rem;
+    overflow: hidden; 
+
+}
+
+main aside nav ul li a .icon_box img,
+main aside nav ul li a .icon_box svg{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+main aside nav ul li a .chart_name{
+    line-height: var(--li-height);
+    color: black;
+    font-size: 1rem;
+    text-transform: capitalize;
+}
+/* --------- curve outside ---------- */
+
+main aside nav ul li.selected a::before{
+    content: "";
+    position: absolute;
+    right:0;
+    top:-50px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px var(--bg_color);
+    background: transparent;
+    /* z-index: 0; */
+}
+main aside nav ul li.selected a::after{
+    content: "";
+    position: absolute;
+    right:0;
+    bottom:-50px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px var(--bg_color);
+    background: transparent;
+    /* z-index: 0; */
+}
+
+/* chart scetion start */
+main .charts_section {
+    border-radius: 10px;
+    background-color: var(--bg_color);
+    padding: 1rem 1rem;
+    z-index: 1;
+}
+main .charts_section .chart_container{
+    
+    width: 450px;
+    max-width: 550px;
+    height: auto;
+    overflow: hidden;
+}
+main .charts_section .chart_container .chart_display{
+    padding: 1rem;
+    /* parent ke according stretch hoga */
+    width: 100%;       
+    /* maximum width set karne ke liye */
+    /* max-width: 400px; */
+     /*desired height  */
+    height: auto; 
+    /* center align */    
+    margin: auto;      
+}
+main .charts_section .chart_container .chart_display #TriggersChart,
+main .charts_section .chart_container .chart_display #SourceChart {
+    width:100%;
+    height: 100%;
+
+}
+main .charts_section .chart_container .chart_display #TimeDurationChart{
+    width:100%;
+    height: 100%;
+}
+main .charts_section .chart_container .ChartTypeSelector{
+    border-bottom: 1px solid brown;
+    padding: 10px 1rem;
+}
+
+
+/* Container */
+main .charts_section .chart_container .duration_selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;  /* spacing between elements */
+    
+}
+
+
+
+
+/* flex setting start */
+main{
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+/* main aside{flex: 0 0 100%;} */
+
+main aside nav ul li a{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:1rem;
+}
+main .charts_section{
+    flex: 1 1 100%;
+}
+
+main .charts_section{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    gap:2rem;
+    row-gap: 20px;
+}
+main .charts_section .chart_container .duration_selector{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+main .charts_section .chart_container .ChartTypeSelector{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly; 
+}
+/* flex setting end */
+
+
+

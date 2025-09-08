@@ -61,7 +61,7 @@ class myChartDashbod{
     #createChartTypeSelector(){
         const { TriggerChartChoice, SourceChartChoice, TimeDurationChartChoice } = this.#charTypeChoice;
 
-        const radioBtnList = ["bar", "line", "pie", "doughnut", "radar", "polarArea", "bubble", "scatter"];
+        const radioBtnList = ["bar", "line", "pie", "doughnut", "radar", "polarArea", ]; //"bubble", "scatter"
         function buildRadioOptions(container, RadioName){
             let innerHtml = ''; 
             radioBtnList.forEach((value)=>{

@@ -42,7 +42,7 @@ main{
     z-index: 1;
     width:90vw;
     margin:1rem auto;
-    padding-top: 1rem;
+    /* padding-top: 1rem; */
 }
 body header{
     align-self: flex-start;

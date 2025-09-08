@@ -19,7 +19,7 @@ def delete_old_icon(sender, instance, **kwargs):
 
     # default icon को delete मत करना
     if old_icon and old_icon != new_icon:
-        if old_icon.name != "Activity_icons/default_icon.svg":
+        if old_icon.name != "Activity_icons/preDefined/default_icon.svg":
             if os.path.isfile(old_icon.path):
                 os.remove(old_icon.path)
 
@@ -28,6 +28,6 @@ def delete_old_icon(sender, instance, **kwargs):
 def delete_icon_on_delete(sender, instance, **kwargs):
     icon = instance.icon
     if icon:
-        if icon.name != "Activity_icons/default_icon.svg":   # default वाली फाइल को मत हटाना
+        if icon.name != "Activity_icons/preDefined/default_icon.svg":   # default वाली फाइल को मत हटाना
             if os.path.isfile(icon.path):
                 os.remove(icon.path)

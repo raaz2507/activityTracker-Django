@@ -30,7 +30,7 @@ class MainConfig(AppConfig):
                             "trigger" : value['trigger'],
                             "extra": value.get('extra', {}),
                             "color_field": value.get('color', "#fff") or '#FFFFFF',
-                            'icon': value.get('icon', 'Activity_icons/default_icon.svg') or 'Activity_icons/default_icon.svg',
+                            'icon': value.get('icon', 'Activity_icons/preDefined/default_icon.svg') or 'Activity_icons/preDefined/default_icon.svg',
                         }
                     )
                 except IntegrityError:

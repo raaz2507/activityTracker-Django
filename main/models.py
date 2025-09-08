@@ -23,7 +23,7 @@ class activity_schema(models.Model):
         blank= True,
     )
     activity_name = models.CharField(max_length=50, unique=True, null=False, blank=False)
-    icon =  models.FileField(upload_to= 'Activity_icons/', null=True, blank=True, default='Activity_icons/default_icon.svg')
+    icon =  models.FileField(upload_to= 'Activity_icons/userDefined', null=True, blank=True, default='Activity_icons/preDefined/default_icon.svg')
     # height = models.IntegerField(null=True, blank=True)
     # width = models.IntegerField(null=True, blank=True)
     slug = models.SlugField(max_length=50, unique=True, null=False, blank= False)

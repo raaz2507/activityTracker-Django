@@ -1,150 +1,147 @@
 :root{
-    --bg_color : rgba(255, 255, 255, 0.5);
-    --curve_color: hsla(0, 0%, 94%, 0.7);
-    --li-height :2rem;
+    --white : #fff8f8;
+    --blue: #287bff;
+    --gray: #f5f5f5;
+    --black1 : #222;
+    --black2 : #999;
 }
-
-/* main *{ border: 1px solid red;} */
+/* main *{border: 1px solid red;} */
 main{
-    margin-top: 1rem;
-    padding: 1rem auto;
-    border-radius: 10px;
-    /* overflow: hidden; */
-}
-
-main aside{
-    background-color: rgba(135, 207, 235, 0.8);
-    border-radius: 10px;
-
-}
-main aside .toggle_nav{
-    width: 2.5rem;
-    height: 2.5rem;
-    margin: 1rem;
-
-}
-main aside .toggle_nav svg,
-main aside .toggle_nav img{
-    width:100%;
-    height:auto;
-}
-
-main aside nav{
     padding: 0;
-    margin-left: 1rem;
-}
-main aside nav ul{
-    list-style: none;
-}
-main aside nav ul li{
-    width: 100%;
-    padding: 10px 0;
-    border-top-left-radius: var(--li-height);
-    border-bottom-left-radius: var( --li-height);
-    /* position: relative; */
     
 }
-main aside nav ul li .chart_name{
-    font-size: 1rem;
-    line-height: 3rem;
-}
-main aside nav ul li.selected{
-    background-color: var(--bg_color) !important;
-    color: black !important;
-    
-}
-/* --------- curve outside ---------- */
 
-/* main aside nav ul li.selected::before{
-    content: "";
 
-    position: absolute;
-    top:-4rem;
-    right:0;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    box-shadow: 3px 3px 0 3px var(--bg_color);
-    background-color: transparent;
-} */
-main aside nav ul li a{
-    
-    text-decoration: none;
-    margin-left: 1rem;
+/* ----- navbar styling start ------ */
+main aside {
+    background-color: var(--blue);
+    border-radius: 25px 0 0 25px;
+    border-radius: 12px 0 0 12px;
+    border-left: 6px solid #ff9800;
 }
-main aside nav ul li a .icon_box{
-    width: 2rem;
-    height: 2rem;
-    overflow: hidden; 
 
-}
-main aside nav ul li a .icon_box img,
-main aside nav ul li a .icon_box svg{
-    width: 100%;
-    height: 100%;
+main aside .toggleNav_btn{
+    width: 45px;
+    height: 45px;
     object-fit: contain;
 }
-main aside nav ul li a .chart_name{
-    line-height: var(--li-height);
-    color: rgb(192, 192, 255);
-}
-
-
-/* chart scetion start */
-main .charts_section {
-    border-radius: 10px;
-    background-color: var(--bg_color);
-    padding: 1rem 1rem;
-}
-main .charts_section .chart_container{
-    box-shadow: 0px 0px 13px -1px hsla(0, 0%, 0%, 0.9);
-    outline: 5px solid rgba(255, 241, 215, 0.9);
-    overflow: hidden;
-    background-color: rgba(250, 235, 215, 0.911); 
-    border-radius: 10px;
-    width: 450px;
-    max-width: 550px;
+main aside .toggleNav_btn img,
+main aside .toggleNav_btn svg{
+    width: 100%;
     height: auto;
 }
-main .charts_section .chart_container .chart_display{
-    padding: 1rem;
-    /* parent ke according stretch hoga */
-    width: 100%;       
-    /* maximum width set karne ke liye */
-    /* max-width: 400px; */
-     /*desired height  */
-    height: auto; 
-    /* center align */    
-    margin: auto;      
+main aside nav.chartsNav{
+    padding-left: 20px;
+    margin-top: 30px;
+    
 }
-main .charts_section .chart_container .chart_display #TriggersChart,
-main .charts_section .chart_container .chart_display #SourceChart {
+main aside nav.chartsNav ul {
+    list-style: none;
+}
+main aside nav.chartsNav ul li{
+    position: relative;
+}
+main aside nav.chartsNav ul li .icon_box{
+    width:40px;
+    height: 40px;
+    object-fit: contain;
+    transition: max-width 0.7s ease;
+}
+main aside nav.chartsNav ul li .icon_box img,
+main aside nav.chartsNav ul li .icon_box svg{
     width:100%;
-    height: 100%;
+    height: auto;
+}
+main aside nav.chartsNav ul li .chart_name{
 
 }
-main .charts_section .chart_container .chart_display #TimeDurationChart{
-    width:100%;
-    height: 100%;
+main aside nav.chartsNav ul li .chart_name.hide{
+
+}
+/* --------- curve outside start---------- */
+main aside nav ul li{
+    color:var(--white);
+    margin-bottom: 13px;
+    border-bottom-left-radius: 35px;
+    border-top-left-radius: 35px;
+    padding: 10px 0px;
+    padding-left: 5px;
+    box-shadow: -6px 6px 8px -7px rgba(0, 0, 0, 0.586);
+}
+main aside nav ul li:hover{
+    background-color: rgba(255, 192, 203, 0.387);
+}
+main aside nav ul li.selected{
+    background: var(--white);
+    color: var(--aside_color);
+}
+main aside nav ul li.selected::before{
+    content: "";
+    position: absolute;
+    right:0;
+    top:-50px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px var(--white);
+    background: transparent;
+    z-index: 0;
+}
+main aside nav ul li.selected::after{
+    content: "";
+    position: absolute;
+    right:0;
+    bottom:-50px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px var(--white);
+    background: transparent;
+    z-index: 0;
+}
+/* --------- curve outside end---------- */
+
+main aside nav ul li .chart_name{
+    font-size: 1rem;
+}
+
+
+/* ----- navbar styling end ------ */
+
+
+/* --------- chart area css start -------*/
+main .charts_section{
+    /* margin: 13px 10px; */
+    padding: 30px 10px;
+    z-index: 1;
+    background: var(--white);
+    border-radius: 0  13px 13px 0;
+}
+
+/* ---- chart container styling start */
+main .charts_section .chart_container{
+    width: 30rem;
+    background-color: rgba(250, 235, 215, 0.6); 
+    box-shadow: 0px 0px 13px -1px hsla(0, 0%, 0%, 0.9);
+    border-radius: 10px;
+    outline: 5px solid rgba(255, 241, 215, 0.9);
+}
+main .charts_section .chart_container .chart_display{
+    padding: 10px 5px;
 }
 main .charts_section .chart_container .ChartTypeSelector{
-    border-bottom: 1px solid brown;
-    padding: 10px 1rem;
+    padding: 8px 5px;
+    text-transform: capitalize;
+    background-color: rgba(135, 207, 235, 0.38);
+    border-radius: 3px;
 }
-
-
-/* Container */
-main .charts_section .chart_container .duration_selector {
-    display: flex;
-    align-items: center;
-    gap: 10px;  /* spacing between elements */
+main .charts_section .chart_container .duration_selector{
     padding: 8px 12px;
-    background-color: #f9f9f9;
+    background-color: #f9f9f9b3;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     font-family: Arial, sans-serif;
 }
-
 /* Date input styling */
 main .charts_section .chart_container .duration_selector input[type="date"] {
     padding: 6px 10px;
@@ -171,57 +168,51 @@ main .charts_section .chart_container .duration_selector button:hover {
 
 /* Selected button */
 main .charts_section .chart_container .duration_selector button.selected-duration {
-    background-color: #007bff;
-    /* background-color: rgba(0, 128, 0, 0.3); */
     color: #fff;
     border-color: #007bff;
+    background: linear-gradient(135deg, #287bff, #00c6ff);  /* gradient */
 }
-
-
-/* flex setting start */
+/* ---- chart container styling end */
+/* --------- chart area css end ---------*/
+/* flex setting start  */
 main{
     display: flex;
     flex-direction: row;
     align-items: stretch;
 }
 main aside{
-    flex: 0 0 15rem;
+    flex: 1 1 auto;
 }
-
-main aside nav ul li a{
+main aside nav ul li{
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
-    gap:1rem;
+    gap:10px;
 }
 main .charts_section{
-    flex: 1 1 100%;
+    flex: 1 1 80%;
 }
-
 main .charts_section{
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-evenly;
-    gap:2rem;
-    row-gap: 20px;
+    gap: 20px 10px;
+}
+main .charts_section .chart_container .ChartTypeSelector{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 5px 10px;
 }
 main .charts_section .chart_container .duration_selector{
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: space-evenly;
-}
-
-main .charts_section .chart_container .ChartTypeSelector{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly; 
+    gap: 5px 10px;
 }
 /* flex setting end */
-
-
 

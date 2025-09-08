@@ -10,19 +10,16 @@
 {% block content %}
 <main>
     <aside>
-        <div class="toggle_nav">
-            <div class="toggle_btn">
-                <img src="{%static 'img/grid-svgrepo-com.svg' %}" alt="">
-            </div>
-        </div>
+        <!-- <div class="toggleNav_btn">
+            <img src="{%static 'img/grid-svgrepo-com.svg' %}" alt="">
+        </div> -->
         <nav class="chartsNav">
             <ul>
                 {% for data in activity_meta.values %}
-                <li class="{% if forloop.first %} selected {% endif %}" style="background-color: {{ data.color }};" data-activity_id ={{data.id}}>
-                    <a href="#">
-                        <span class="icon_box"><img src="{{ data.icon_url }}" alt="icon"></span>
-                        <span class="chart_name">{{ data.activity_name }}</span>
-                    </a>
+                <li class="{% if forloop.first %} selected {% endif %}"  data-activity_id ={{data.id}}>
+                    <!-- style="background-color: {{ data.color }};" -->
+                    <div class="icon_box"><img src="{{ data.icon_url }}" alt="icon"></div>
+                    <div class="chart_name ">{{ data.activity_name }}</div>
                 </li>
                 {% endfor %}
             </ul>
@@ -39,10 +36,7 @@
             </div>
             <div class="duration_selector" id="TriggersDurationSelector">
                 <input type="date" name="" id="Dateset4TriggersDuration">
-                <button type="button" data-period="day" >By Day</button>
-                <button type="button" data-period="month">By Month</button>
-                <button type="button" data-period="year">By Year</button>
-                <button type="button" data-period="all" class="selected-duration">All</button>
+                {% include 'partials/duration_selector_btn.html' %}
             </div>
         </div>
 
@@ -55,10 +49,7 @@
             </div>
             <div class="duration_selector" id="SourceDurationSelector">
                 <input type="date" name="" id="Dateset4SourceDuration">
-                <button type="button" data-period="day">By Day</button>
-                <button type="button" data-period="month">By Month</button>
-                <button type="button" data-period="year">By Year</button>
-                <button type="button" data-period="all" class="selected-duration">All</button>
+                {% include 'partials/duration_selector_btn.html' %}
             </div>
         </div>
 
@@ -71,10 +62,7 @@
             </div>
             <div class="duration_selector" id="TimeChartDurationSelector">
                 <input type="date" name="" id="Dateset4TimeChartDuration">
-                <button type="button" data-period="day">By Day</button>
-                <button type="button" data-period="month">By Month</button>
-                <button type="button" data-period="year">By Year</button>
-                <button type="button" data-period="all" class="selected-duration">All</button>
+                {% include 'partials/duration_selector_btn.html' %}
             </div>
         </div>
     </div>
@@ -84,4 +72,5 @@
 <script src="{% static 'js/chart.umd.js' %}"></script>
 <!-- <script>const allChartData = JSON.parse('{{ chart_data|escapejs }}');</script> -->
 <script src="{% static 'js/charts_template.js' %}"></script>
+<!-- <script src="{% static 'js/chart_nav.js' %}"></script> -->
 {% endblock javascript %}
