@@ -1,18 +1,18 @@
 main form {
     max-width: 40rem;
     margin: 2rem auto;
-    background-color: #87cfebb3;
+    background-color: rgba(var(--bs-info-rgb), 0.7);
     /* border: 2px solid red; */
     border-radius: 10px;
     padding: 1rem 16px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(var(--bs-black-rgb), 0.1);
     font-family: Arial, sans-serif;
 }
 
 /* Fieldset styling */
 form fieldset {
-    border: 1px solid rgb(204, 204, 204);
-    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--bs-gray-400);
+    background-color: rgba(var(--bs-white-rgb), 0.5);
     padding: 10px 13px 5px 13px;
     border-radius: 10px;
     margin-top: 1rem;
@@ -26,7 +26,8 @@ form legend {
     font-size: 1.2rem;
     font-weight: bold;
     padding: 0 10px;
-    color: rgb(138, 99, 0);
+    color: rgb(138, 99, 0); /* closest: var(--bs-warning-text-emphasis) */
+    color: var(--bs-warning-text-emphasis);
 }
 
 /* Paragraph spacing */
@@ -34,7 +35,6 @@ form p {
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* justify-content: flex-start; */
 }
 
 /* Label styling */
@@ -43,7 +43,6 @@ form p label {
     flex-basis: 10rem;
     flex-grow: 0;
     flex-shrink: 0;
-   
 }
 
 /* Input & textarea styling */
@@ -51,22 +50,21 @@ form input[type="text"],
 form input[type="file"],
 form textarea {
     padding: 0.5rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--bs-gray-400);
     border-radius: 6px;
     font-size: 1rem;
     width: 100%;
-    /* box-sizing: border-box; */
 }
 
-form p:has(input[type="file"]){
-    /* flex-wrap: wrap; */
+form p:has(input[type="file"]) {
     flex-direction: column;
     row-gap: 1rem;
 }
-form p:has(input[type="file"]) label{
+
+form p:has(input[type="file"]) label {
     flex-basis: auto;
 }
-/* form p:has(input[type="file"]) *{ border: 1px solid red;} */
+
 /* Button styling */
 form button[type="submit"] {
     margin-top: 1rem;
@@ -74,8 +72,8 @@ form button[type="submit"] {
     margin-right: 13px;
     padding: 0.7rem 1.5rem;
     font-size: 1.1rem;
-    background-color: #62a0ea;
-    color: #fff;
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -83,51 +81,50 @@ form button[type="submit"] {
 }
 
 form button[type="submit"]:hover {
-    background-color: #4a7ac7;
+    background-color: #4a7ac7; /* nearest: var(--bs-primary-text-emphasis) */
+    background-color: var(--bs-primary-text-emphasis);
 }
 
-
 /* my css */
-
-.inputContainer{
+.inputContainer {
     width: 100%;
-    border: 1px solid gray;
+    border: 1px solid var(--bs-gray-500);
     border-radius: 10px;
     padding: 5px 1rem;
-    background-color: rgba(245, 222, 179, 0.8);
-    /* flex settings */
+    background-color: rgba(245, 222, 179, 0.8); /* closest: var(--bs-warning-bg-subtle) */
+    background-color: var(--bs-warning-bg-subtle);
     display: flex;
     align-items: center;
     column-gap: 10px;
     margin-bottom: 8px;
 }
-.inputContainer input[type="text"]{
+
+.inputContainer input[type="text"] {
     border: 0;
-    width:100%;
-    /* flex: 1; */
-    /* background-color: transparent; */
+    width: 100%;
 }
-.inputContainer .btn{
+
+.inputContainer .btn {
     min-width: 2rem;
     max-width: 2rem;
     height: 2rem;
     font-size: 1rem;
     font-weight: 700;
-    color: rgb(255, 255, 255);
+    color: var(--bs-white);
     border-radius: 50%;
     padding: 0;
     line-height: 2rem;
     cursor: pointer;
-    /* flex settings */
     display: flex;
     justify-content: center;
     align-items: center;
     border: none;
-    cursor: pointer;
 }
-.inputContainer .btn.removeBtn{
-    background-color: rgba(255, 0, 0, 0.7);
+
+.inputContainer .btn.removeBtn {
+    background-color: rgba(var(--bs-danger-rgb), 0.7);
 }
-.inputContainer .btn.addBtn{
-    background-color: rgba(0, 178, 0, 0.7);
+
+.inputContainer .btn.addBtn {
+    background-color: rgba(var(--bs-success-rgb), 0.7);
 }

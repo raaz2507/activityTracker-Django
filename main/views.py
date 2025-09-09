@@ -57,6 +57,10 @@ def singup_view(request):
         form = SignUpForm()
     return render(request, "singup.html", {'form': form})
 
+@login_required(login_url= 'home')
+def ProfileSettingsView(request):
+    return render(request, 'profilePSettings.html')
+
 from .models import myuser
 from django.shortcuts import get_object_or_404
 from .forms import UserUpdateForm
@@ -438,6 +442,35 @@ def userAccountManage(request, user_id=None, del_user_id=None):
         all_users = myuser.objects.all()
         print(all_users)
         return render(request, 'userAccountManage.html', {'all_users': all_users})
+
+
+from django.core import serializers
+@login_required(login_url='login')
+def backupAccoutData_view(request):
+    data = userRecords.objects.filter(usr_id=request.user)
+    data_json = serializers.serialize('json', data)
+    response =  HttpResponse(data_json, content_type="application/json")
+
+    response['Content-Disposition'] = 'attachment; filename="userrecords.json"' # Download trigger karna
+    # response['Content-Disposition'] = 'inline' # Inline dikhana (browser me open karna)
+    return response
+
+import json
+@login_required(login_url='login')
+def restoreAccountData_view(request):
+    if  request.method == "POST" and request.FILES.get('file'):
+        file = request.FILES.get('file')
+        data = json.load(file)
+        print(data)
+        for obj in data:
+            pass
+            # UserRecords.objects.create(
+            #     usr_id_id = obj["fields"]["usr_id"],
+            #     date = obj["fields"]["date"],
+            #     start_time = obj["fields"]["start_time"],
+            #     end_time = obj["fields"]["end_time"]
+            # )
+        return JsonResponse({"status": "success"})
 
 # def userAccountManageDeleteUsr(request, user_id):
 #     user = get_object_or_404(Users, usr_id=user_id);

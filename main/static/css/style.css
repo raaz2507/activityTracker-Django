@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
-/* @import url('./colorProfile.css'); */
+@import url('./colorProfile.css');
+/* :root, [data-theme = 'light']{
+
+}
+.dark, [data-theme = 'dark']{
+
+} */
 
 body, html{
     width: 100%;

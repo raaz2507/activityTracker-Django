@@ -8,7 +8,10 @@ urlpatterns = [
     path( 'login/', views.login_view, name = "login" ),
     path( 'logout/', views.logout_view, name='logout'),
     path( 'signup/', views.singup_view, name="signup" ),
+    path('profile_settings/', views.ProfileSettingsView, name="profile_settings" ),
     path( 'change_user_profile/<int:user_id>/', views.change_user_profile, name='change_user_profile'),
+    path('bd/' ,views.backupAccoutData_view, name = "backupData"),
+    path('rd/' ,views.restoreAccountData_view, name = "restoreData"),
 
     # Activity related 
     path('selectActivity/', views.selectActivity_view, name='selectActivity'),

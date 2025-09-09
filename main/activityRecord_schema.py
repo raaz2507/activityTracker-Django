@@ -67,7 +67,7 @@ ACTIVITY_SCHEMA = {
         "trigger":{"Boredom" : "", "Stress Relief" : "", "Routine" : "", "Curiosity" : "", "Long Gap" : ""},
         "extra":{"Times": ""},
         "color": "#fff",
-        "icon": "Activity_icons/preDefined/",
+        "icon": "",
     }
 }
 # {% for category, form in forms_dict.items %}

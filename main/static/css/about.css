@@ -1,25 +1,26 @@
-main{
+main {
     width: 90%;
     margin: 0 auto;
     /* border: 1px solid red; */
     padding: 1rem;
 }
+
 .about_section {
     max-width: 900px;
     margin: 40px auto;
     padding: 30px;
-    background: #ffffff;
+    background: var(--bs-white);
     border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(var(--bs-black-rgb), 0.1);
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
+    color: var(--bs-gray-800);
     line-height: 1.6;
 }
 
 .about_section h2 {
     text-align: center;
     font-size: 2rem;
-    color: #2c3e50;
+    color: var(--bs-gray-900);
     margin-bottom: 20px;
     position: relative;
 }
@@ -29,7 +30,7 @@ main{
     display: block;
     width: 60px;
     height: 4px;
-    background: #3498db;
+    background: var(--bs-primary);
     margin: 10px auto 0;
     border-radius: 2px;
 }
@@ -38,7 +39,7 @@ main{
     font-size: 1.1rem;
     text-align: center;
     margin-bottom: 30px;
-    color: #555;
+    color: var(--bs-gray-700);
 }
 
 .about_section ol {
@@ -50,21 +51,21 @@ main{
 .about_section ol > li {
     margin-bottom: 25px;
     padding: 20px;
-    background: #f9fafc;
+    background: var(--bs-light);
     border-radius: 12px;
-    border-left: 6px solid #3498db;
+    border-left: 6px solid var(--bs-primary);
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .about_section ol > li:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 6px 14px rgba(var(--bs-black-rgb), 0.08);
 }
 
 .about_section ol > li h4 {
     font-size: 1.3rem;
     margin-bottom: 12px;
-    color: #34495e;
+    color: var(--bs-gray-900);
 }
 
 .about_section ul {
@@ -82,16 +83,16 @@ main{
     content: "✔";
     position: absolute;
     left: 0;
-    color: #27ae60;
+    color: var(--bs-success);
     font-weight: bold;
 }
 
 .about_section b {
-    color: #2c3e50;
+    color: var(--bs-gray-900);
 }
 
 .about_section code {
-    background: #ecf0f1;
+    background: var(--bs-gray-200);
     padding: 2px 6px;
     border-radius: 4px;
     font-size: 0.9rem;

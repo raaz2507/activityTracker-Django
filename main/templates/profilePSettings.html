@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title%}site title{% endblock title %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'css/profilePSettings.css' %}">
+{% endblock stylesheet %}
+
+{% block content %}
+<main>
+    <div class="profileSettingContainer">
+        <a href="{% url 'change_user_profile' request.user.id %}" class="profileSettingBtn">
+            <div>
+                <label for="">Edit Profile</label>
+                <div class="icon">
+                    <img src="{%static 'img/gears-solid-full.svg' %}" alt="icon">
+                </div>
+            </div>
+        </a>
+        <!-- <a href="#">Delete Account</a> -->
+        <div class="theme-selector">
+            <label for="themeSelect">Select Theme</label>
+            <select name="themeSelect" id="themeSelect">
+                <option value="blueTheme" selected>Blue</option>
+                <option value="pinkTheme">Pink</option>
+            </select>
+        </div>
+        <div class="data_actions">
+            <a href="{% url 'backupData' %}"><button type="button" class="btn backupBtn">Backup Data</button></a>
+            <a href="#"><button type="button" class="btn restoreBtn">Restore Data</button></a>
+        </div>
+    </div>
+</main>
+
+    
+{% endblock content %}
+{% block javascript %}
+
+<script src="{% static 'js/blank.js' %}"></script>
+{% endblock javascript %}
+

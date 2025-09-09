@@ -1,4 +1,9 @@
+import {PasswordToggler} from './passwordToggler.js';
+
+
 document.addEventListener("DOMContentLoaded", () => {
+    new PasswordToggler(document);
+
     const pwd1 = document.getElementById("id_password1");
     const pwd2 = document.getElementById("id_password2");
     const msg = document.createElement("small");

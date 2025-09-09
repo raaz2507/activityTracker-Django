@@ -8,12 +8,14 @@
     </div>
     <div class="button_area">
     {% if request.user.is_authenticated and request.user.id %}
-        <a href="{% url 'change_user_profile' request.user.id %}">
-            <div class="loing_profile">
+        
+         <a href="{% url 'profile_settings' %}">
+            <div class="userProfileContainer" id="userProfileContainer">
                 <img src="{% static 'img/circle-user-solid-full.svg' %}" alt="icon">
                 <div id="username">{{ request.user.username }}</div>
             </div>
-        </a>
+         </a>
+         
         <a href="{% url 'logout' %}"><button type="button">Logout</button></a>
         
 

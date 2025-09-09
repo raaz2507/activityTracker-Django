@@ -70,28 +70,46 @@ header nav ul li a:hover {
 header .button_area a{
   text-decoration: none;
 }
-header .button_area .loing_profile{
-  text-align: center;
-  padding: 3px 6px;
-  
-  /* border: 1px solid rgba(245, 222, 179, 0.4); */
-  /* border-radius: 15%; */
-  /* box-shadow: 0px 0px 14px -6px rgba(0, 0, 0, 0.2); */
-}
-header .loing_profile img{
-  width: 2rem;
-  height: auto;
- 
-}
-header .loing_profile #username{
-  border-radius: 5px;
-  background-color: #4e54c899;
-  font-size: .8rem;
-  text-transform: capitalize;
-  padding: 5px 8px;
-  color: white;
-}
 
+/* ---- user Profile container start ------ */
+
+header .userProfileContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* icon और username के बीच spacing */
+    padding: 6px 10px;
+    text-transform: capitalize;
+    border-radius: 25px;
+    background: rgba(245, 245, 245, 0.9); /* हल्का ग्रे बैकग्राउंड */
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+} 
+
+/* hover effect */
+header .userProfileContainer:hover {
+    background: #e8e8e8;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+} 
+
+/* profile icon */
+header .userProfileContainer img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%; 
+}  
+
+
+/* ---- user Profile setting end ------ */
+
+
+
+
+
+
+
+header .userProfileContainer .popUpContainer.hidden{
+  display: none;
+}
 
 /* Logout Button */
 header .button_area button {
@@ -131,6 +149,12 @@ header {
     flex-wrap: wrap;
     gap: 1rem;
 }
+/* header .userProfileContainer .popUpContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+} */
 header .button_area{
   display: flex;
   flex-wrap: wrap;
@@ -145,6 +169,8 @@ header nav ul{
   justify-content: center;
   gap: 1rem;
 }
+
+
 /* flex setting end */
 @media only screen and (max-width: 768px){
   header {
@@ -152,3 +178,20 @@ header nav ul{
     row-gap: 2rem;
   }
 }
+
+
+
+
+/* header .userProfileContainer .popUpContainer{
+  background-color: rgba(255, 255, 255, 0.688);
+  font-size: 1rem;
+  width: max-content;
+  margin-top:3px;
+  padding: 10px 10px;
+  border-radius: 10px;
+  position: absolute;
+  top: 100%;
+  right: 50%;
+  transform: translateX(50%);
+  z-index: 2;
+} */
