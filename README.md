@@ -2,7 +2,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.13.7%2B-blue)
 ![Django](https://img.shields.io/badge/Django-5.2.6%2B-green)
-![Chart.js](https://img.shields.io/badge/Charjs-4.0%2B-green)
+![Chart.js](https://img.shields.io/badge/Chart.js-4.0%2B-green)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 
