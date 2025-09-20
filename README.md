@@ -1,7 +1,8 @@
 # Activity Tracker 🕒  
 
-![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
-![Django](https://img.shields.io/badge/Django-4.0%2B-green)
+![Python](https://img.shields.io/badge/Python-3.13.7%2B-blue)
+![Django](https://img.shields.io/badge/Django-5.2.6%2B-green)
+![Chart.js](https://img.shields.io/badge/Charjs-4.0%2B-green)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 
@@ -70,15 +71,22 @@ Now visit `http://127.0.0.1:8000/` in your browser. 🎉
 ## 📸 Screenshots / Demo  
 
 Here are some previews of the Activity Tracker in action:  
+### 🏠 Home page
+![Login Page](screenshots/homepage.jpg)
 
-### 🔑 Login / Signup  
-![Login Page](screenshots/login.png)  
+### 🎯 Activity selector 
+![Login Page](screenshots/selectActivity.jpg)
 
-### 🏠 Dashboard  
-![Dashboard](screenshots/dashboard.png)  
+### 🎯 Activity Creator 
+![Login Page](screenshots/create_activity.jpg)  
 
-### 📊 Activity Tracking  
-![Activity Tracking](screenshots/activity-tracking.png)  
+### 🗓️ Calander Tracking
+![Activity Tracking](screenshots/calander.jpg)
+
+### 📊 Charts  
+![Dashboard](screenshots/charts.jpg)
+
+
 
 *(You can replace these with your actual screenshots or GIFs)*  
 
@@ -116,3 +124,4 @@ This project is licensed under the **MIT License** – free to use, modify, and 
 
 **Raaz**  
 - GitHub: [raaz2507](https://github.com/raaz2507)  
+
