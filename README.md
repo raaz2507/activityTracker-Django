@@ -7,6 +7,7 @@
 ![Status](https://img.shields.io/badge/Status-Active-success)
 
 A web application built with **Django** that helps users track their daily activities such as **study, sports, movies, reading, and more**. The app allows you to log time, analyze productivity, and visualize how your day is spent.  
+### It's Hosted on Render https: ![//activitytracker-django.onrender.com/](https://activitytracker-django.onrender.com/) 
 
 ---
 
@@ -124,4 +125,5 @@ This project is licensed under the **MIT License** – free to use, modify, and 
 
 **Raaz**  
 - GitHub: [raaz2507](https://github.com/raaz2507)  
+
 
